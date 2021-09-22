@@ -4,6 +4,7 @@ import os
 import sys
 
 # test commit
+# test 2
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'b02_housing_app.settings')
