@@ -157,4 +157,5 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend'
 ]
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+if 'HEROKU' in os.environ:
+    django_heroku.settings(locals())
