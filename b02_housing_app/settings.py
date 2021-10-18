@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-e=%(rs3jj0_d2t^wrs5j&61hp&e^evk0p8w%(wcp!k0szs5sve
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['b02-housing-app.herokuapp.com']
+ALLOWED_HOSTS = ['b02-housing-app.herokuapp.com','localhost']
 
 
 # Application definition
@@ -135,7 +135,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Google Login
-# SITE_ID = 1
+SITE_ID = 2
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
