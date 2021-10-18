@@ -168,4 +168,4 @@ AUTHENTICATION_BACKENDS = [
 # Activate Django-Heroku.
 if 'HEROKU' in os.environ:
     django_heroku.settings(locals())
-    SITE_ID = 1
+    SITE_ID = 2
