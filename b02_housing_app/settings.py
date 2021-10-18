@@ -144,7 +144,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Google Login
-# SITE_ID = 2
+SITE_ID = 1
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
@@ -168,6 +168,3 @@ AUTHENTICATION_BACKENDS = [
 # Activate Django-Heroku.
 if 'HEROKU' in os.environ:
     django_heroku.settings(locals())
-    SITE_ID = 6
-
-SITE_ID/3
