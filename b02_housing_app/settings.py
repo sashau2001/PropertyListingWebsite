@@ -83,8 +83,13 @@ WSGI_APPLICATION = 'b02_housing_app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'deffgbpfkf265n',
+        'HOST': 'ec2-52-0-93-3.compute-1.amazonaws.com',
+        'USER': 'ipybjpxtxdvcta',
+        'PORT': '5432',
+        'PASSWORD': 'ca617d57da675f42b3bcb9cf00876d07ee0f96151bc6aed37f311a4c2243c204',
+
     }
 }
 
