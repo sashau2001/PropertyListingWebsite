@@ -1,11 +1,20 @@
 {% load socialaccount %}
 <html>
 <body>
-<h1>Off-Grounds Housing</h1>
-{% if user.is_authenticated %}
-  <p>Welcome, You are logged in as {{ user.username }}</p>
-{% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
-{% endif %}
+
+  <div class="center">
+    <h1>Off-Grounds Housing</h1>
+    {% if user.is_authenticated %}
+      <p>Welcome, You are logged in as {{ user.username }}</p>
+    {% else %}
+      <a href="{% provider_login_url 'google' %}">Login With Google</a>
+    {% endif %}
+  </div>
 </body>
+<style>
+  .center {
+      color: #0e197e;
+      text-align: center;
+  }
+</style>
 </html>
