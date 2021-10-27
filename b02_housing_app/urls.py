@@ -24,5 +24,6 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name="index.html")),
     path('accounts/', include('allauth.urls')),
     path('logout', LogoutView.as_view()),
-    path('reviews/', views.insert_review, name='insert_review'),
+    path('submitreview/', views.insert_review, name='insert_review'),
+    path('reviews/', views.reviews, name='reviews'),
 ]
