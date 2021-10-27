@@ -26,4 +26,6 @@ urlpatterns = [
     path('logout', LogoutView.as_view()),
     path('submitreview/', views.insert_review, name='insert_review'),
     path('reviews/', views.reviews, name='reviews'),
+    path('apartment/<int:pk>/', views.apartment, name='apartment'),
+    path('apartments/', views.apartments, name='apartments'),
 ]

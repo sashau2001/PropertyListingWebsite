@@ -3,19 +3,22 @@
 
 
 {% load bootstrap5 %}
+{% load getattr %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
 
-
-{% if review_list %}
+{% if apartment %}
     <ul>
-    {% for t in review_list %}
-        <li>{{ t }}</li>
+    {% for field in field_list %}
+        {% if field.name != "id"  %}
+        <li>{{ field.name }} </li>
+        <li>{{ apartment|getattr:field.name }} </li>
+        {% endif %}
     {% endfor %}
     </ul>
 {% else %}
-    <p>No reviews are available.</p>
+    <p>No  are available.</p>
 {% endif %}
 
 <nav aria-label="Page navigation example">

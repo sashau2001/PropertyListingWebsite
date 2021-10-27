@@ -34,7 +34,7 @@ ALLOWED_HOSTS = ['b02-housing-app.herokuapp.com','localhost']
 
 INSTALLED_APPS = [
     'bootstrap5',
-    'b02_housing_app.apps.B02Config',
+    'b02_housing_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
