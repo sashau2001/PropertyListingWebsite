@@ -22,3 +22,11 @@ class Review(models.Model):
 
     def __str__(self):
         return "\"{}\" by \"{}\"".format(self.apt_name,self.apt_reviewer)
+
+
+class Deepthought(models.Model):
+    title = models.CharField(max_length=200)
+    thought = models.TextField()
+
+    def __str__(self):
+        return self.thought
