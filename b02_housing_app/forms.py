@@ -1,10 +1,10 @@
 from django import forms
-from .models import Apartment
+from .models import Review
 
 
 class ApartmentForm(forms.ModelForm):
     class Meta:
-        model = Apartment
+        model = Review
         fields = "__all__"
 
 
