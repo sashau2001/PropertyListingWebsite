@@ -21,3 +21,17 @@ class LoginTest(TestCase):
         cl = Client()
         exists = cl.login(username='dummyUser', password='TestPassword1?')
         self.assertTrue(exists)
+
+    #Tests if logout works
+    def test_signout(self):
+        cl = Client()
+        cl.login(username='dummyUser', password='TestPassword1?')
+        User = get_user_model()
+        user = User.objects.get(username = 'dummyUser')
+        cl.logout()
+        self.assertFalse(user.is_anonymous)
+
+    #Does not login if user doesn't exist
+    def test_nouser(self):
+        cl = Client()
+        self.assertFalse(cl.login(username='dumbUser', password='TestPassword1@'))
