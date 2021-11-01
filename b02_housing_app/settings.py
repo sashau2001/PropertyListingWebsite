@@ -33,6 +33,8 @@ ALLOWED_HOSTS = ['b02-housing-app.herokuapp.com','localhost','127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'bootstrap5',
+    'b02_housing_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'b02_housing_app',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -141,7 +142,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Google Login
 SITE_ID = 4
