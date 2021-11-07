@@ -21,9 +21,9 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name="index.html")),
+    path('', views.apartments, name='apartments'),
     path('accounts/', include('allauth.urls')),
-    path('logout', LogoutView.as_view()),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('submitreview/', views.insert_review, name='insert_review'),
     path('reviews/', views.reviews, name='reviews'),
     path('apartment/<int:pk>/', views.apartment, name='apartment'),
