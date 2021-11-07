@@ -9,6 +9,7 @@
 {% bootstrap_messages %}
 
 {% if apartment %}
+    {%  include 'map.html' %}
     <ul>
     {% for field in field_list %}
         {% if field.name != "id"  %}
@@ -18,5 +19,5 @@
     {% endfor %}
     </ul>
 {% else %}
-    <p>No  are available.</p>
+    <p>No apartments are available.</p>
 {% endif %}

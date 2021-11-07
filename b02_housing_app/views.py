@@ -1,17 +1,18 @@
-# from django.http import HttpResponseRedirect
-# from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
-# from django.urls import reverse
-# from django.views import generic
+from django.shortcuts import redirect, render
 from .models import Apartment,Review
-# from django.utils import timezone
+from django.conf import settings
 from .forms import ReviewForm
 
 
+
 def insert_review(request):
+    if not request.user.is_authenticated:
+        return redirect('/accounts/google/login/')
     form = ReviewForm(request.POST or None, request.FILES or None)
     if form.is_valid():
-        form.save()
+            form_save = form.save(commit=False)
+            form_save.apt_reviewer = request.user.username
+            form_save.save()
     context = {'form': form, 'insertReview': True}
     return render(request, 'reviewform.html', context)
 
@@ -27,6 +28,10 @@ def apartments(request):
     return render(request, 'apartments.html', context)
 
 def apartment(request,pk):
-    apartment = Apartment.objects.all()[pk-1] # since database ID starts at 1
-    context = {'apartment': apartment, 'field_list': Apartment._meta.local_fields, 'apartments': True}
+    apt= Apartment.objects.all()[pk-1] # since database ID starts at 1
+    context = {'google_api_key': settings.GOOGLE_API_KEY,
+               'apartment': apt,
+               'field_list': Apartment._meta.local_fields,
+               'apartments': True,
+               'location': apt.apt_location}
     return render(request,'apartment.html', context)
