@@ -1,33 +1,37 @@
-# from django.http import HttpResponseRedirect
-# from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
-# from django.urls import reverse
-# from django.views import generic
+from django.shortcuts import redirect, render
 from .models import Apartment,Review
-# from django.utils import timezone
+from django.conf import settings
 from .forms import ReviewForm
 
 
+
 def insert_review(request):
-    context = {}
+    if not request.user.is_authenticated:
+        return redirect('/accounts/google/login/')
     form = ReviewForm(request.POST or None, request.FILES or None)
     if form.is_valid():
-        form.save()
-    context['form'] = form
-    return render(request, 'reviewform.html', {'form': form})
+            form_save = form.save(commit=False)
+            form_save.apt_reviewer = request.user.username
+            form_save.save()
+    context = {'form': form, 'insertReview': True}
+    return render(request, 'reviewform.html', context)
 
 
 def reviews(request):
     review_list = Review.objects.all()
-    context = {'review_list': review_list}
+    context = {'review_list': review_list, 'reviews': True}
     return render(request, 'reviews.html', context)
 
 def apartments(request):
     apartment_list = Apartment.objects.all()
-    context = {'apartment_list': apartment_list}
+    context = {'apartment_list': apartment_list, 'apartments': True}
     return render(request, 'apartments.html', context)
 
 def apartment(request,pk):
-    apartment = Apartment.objects.all()[pk-1] # since database ID starts at 1
-    context = {'apartment': apartment, 'field_list': Apartment._meta.local_fields}
+    apt= Apartment.objects.all()[pk-1] # since database ID starts at 1
+    context = {'google_api_key': settings.GOOGLE_API_KEY,
+               'apartment': apt,
+               'field_list': Apartment._meta.local_fields,
+               'apartments': True,
+               'location': apt.apt_location}
     return render(request,'apartment.html', context)

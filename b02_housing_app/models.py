@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Apartment(models.Model):
     # Treat -1 as NULL
     apt_name = models.CharField(max_length=100)
@@ -29,6 +30,3 @@ class Review(models.Model):
 
     def __str__(self):
         return "\"{}\" by \"{}\"".format(self.apt_name,self.apt_reviewer)
-
-
-
