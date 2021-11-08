@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'django.contrib.gis',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -95,8 +94,6 @@ DATABASES = {
 
     }
 }
-
-DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 if 'test' in sys.argv:
     DATABASES['default'] = {
