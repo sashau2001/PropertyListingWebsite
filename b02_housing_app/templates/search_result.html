@@ -1,0 +1,21 @@
+{% include 'navbar.html' %}
+
+
+
+{% load bootstrap5 %}
+{% load socialaccount %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+
+<h1>Search Result</h1>
+
+<div class="container">
+    <div class="row">
+    {% for t in filtered_list %}
+    <div class="col-md-4">
+        <h3><a href="{% url 'apartment' t.id%}">{{ t }}</a></h3>
+    </div>
+    {% endfor %}
+</div>

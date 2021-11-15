@@ -40,3 +40,8 @@ def apartment(request,pk):
                'apartments': True,
                'location': apt.apt_location}
     return render(request,'apartment.html', context)
+
+def search_results(request):
+    filtered_list  = Apartment.objects.all()
+    context = {'filtered_list': filtered_list}
+    return render(request, 'search_result.html', context)
