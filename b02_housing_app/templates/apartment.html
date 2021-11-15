@@ -3,21 +3,24 @@
 
 
 {% load bootstrap5 %}
-{% load getattr %}
+{% load apt_handling %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
 
 {% if apartment %}
+    <h1>{{ apartment.apt_name }}</h1>
     {%  include 'map.html' %}
-    <ul>
-    {% for field in field_list %}
-        {% if field.name != "id"  %}
-        <li>{{ field.name }} </li>
-        <li>{{ apartment|getattr:field.name }} </li>
-        {% endif %}
-    {% endfor %}
-    </ul>
+    <table class="table">
+      <tbody>
+      {% for field in apartment|get_valid_fields %}
+          <tr>
+            <th scope="row">{{ field|field_desc }}</th>
+            <td>{{ apartment|getattr:field }}</td>
+          </tr>
+      {% endfor %}
+      </tbody>
+    </table>
 {% else %}
     <p>No apartments are available.</p>
 {% endif %}
