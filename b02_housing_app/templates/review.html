@@ -1,0 +1,26 @@
+ {% include 'navbar.html' %}
+
+
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="row">Apartment</th>
+            <th scope="row">Reviewer</th>
+            <th scope="row">Rating</th>
+            <th scope="row">Review</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">{{ review.apt_name }}</th>
+            <th scope="row">{{ review.apt_reviewer }}</th>
+            <th scope="row">{{ review.apt_stars }}</th>
+            <th scope="row">{{ review.apt_review }}</th>
+        </tr>
+    </tbody>
+</table>

@@ -37,7 +37,6 @@ class Review(models.Model):
     apt_name = models.ForeignKey(Apartment, on_delete=models.CASCADE)
     apt_reviewer = models.CharField(max_length=100)
     apt_review = models.TextField()
-    # apt_stars = models.IntegerField(default=5)
     class Stars(models.IntegerChoices):
         ONE = 1
         TWO = 2

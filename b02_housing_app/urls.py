@@ -24,6 +24,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls'), name='accounts'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('submitreview/', views.insert_review, name='insert_review'),
+    path('review/<int:pk>/', views.review, name='review'),
     path('reviews/', views.reviews, name='reviews'),
     path('apartment/<int:pk>/', views.apartment, name='apartment'),
     path('apartments/', views.apartments, name='apartments'),
