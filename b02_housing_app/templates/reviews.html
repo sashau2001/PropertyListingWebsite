@@ -9,11 +9,24 @@
 
 
 {% if review_list %}
-    <ul>
-    {% for t in review_list %}
-        <li>{{ t }}</li>
-    {% endfor %}
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Apartment</th>
+                <th scope="col">Reviewer</th>
+                <th scope="col">Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for review in review_list  %}
+                <tr>
+                    <th scope="row"><a href="{% url 'review' review.id%}">{{ review.apt_name }}</a></th>
+                    <th scope="row">{{ review.apt_reviewer }}</th>
+                    <th scope="row">{{ review.apt_stars }}/5</th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% else %}
     <p>No reviews are available.</p>
 {% endif %}

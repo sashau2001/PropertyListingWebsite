@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from .models import Apartment,Review
+from .models import *
 from django.conf import settings
 from .forms import ReviewForm
 
@@ -22,13 +22,18 @@ def reviews(request):
     context = {'review_list': review_list, 'reviews': True}
     return render(request, 'reviews.html', context)
 
+def review(request,pk):
+    this_review = Review.objects.get(pk=pk)
+    context = {'review': this_review, 'reviews': True}
+    return render(request,'review.html',context)
+
 def apartments(request):
     apartment_list = Apartment.objects.all()
     context = {'apartment_list': apartment_list, 'apartments': True}
     return render(request, 'apartments.html', context)
 
 def apartment(request,pk):
-    apt= Apartment.objects.all()[pk-1] # since database ID starts at 1
+    apt= Apartment.objects.get(pk=pk)
     context = {'google_api_key': settings.GOOGLE_API_KEY,
                'apartment': apt,
                'field_list': Apartment._meta.local_fields,
