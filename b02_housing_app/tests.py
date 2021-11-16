@@ -5,7 +5,7 @@ from django.http import HttpRequest
 import sys
 
 from .models import Apartment, Review
-from .views import reviews, apartments, apartment, insert_review
+from .views import reviews, apartments, apartment, insert_review, search_results
 
 
 class DummyTest(TestCase):
@@ -130,3 +130,24 @@ class GoogleMapTest(TestCase):
         # sys.stderr.write(repr(response.content) + '\n')
         self.assertContains(response,'https://www.google.com/maps/') 
         self.assertContains(response,'St.New Lenox, IL 60451') 
+
+class SearchTest(TestCase):
+    def setUp(self):
+        apartmentTest = Apartment(apt_name='DummyApt',apt_location='St.New Lenox, IL 60451')
+        apartmentTest.save()
+    
+    #Simple test for apartment in list
+    def test_simple_search(self):
+        request = HttpRequest()
+        request.GET.__setitem__('name_query','Dummy')
+        response = search_results(request)
+        # sys.stderr.write(repr(response.content) + '\n')
+        self.assertContains(response, 'DummyApt') 
+
+    #Simple test for apartment not in list
+    def test_not_contain(self):
+        request = HttpRequest()
+        request.GET.__setitem__('name_query','Nothing')
+        response = search_results(request)
+        sys.stderr.write(repr(response.content) + '\n')
+        self.assertNotContains(response, 'DummyApt') 

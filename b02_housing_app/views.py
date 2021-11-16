@@ -41,7 +41,9 @@ def apartment(request,pk):
                'location': apt.apt_location}
     return render(request,'apartment.html', context)
 
+#Filter by name for now
 def search_results(request):
-    filtered_list  = Apartment.objects.all()
+    query = request.GET.get('name_query')
+    filtered_list  = Apartment.objects.filter(apt_name__icontains=query)
     context = {'filtered_list': filtered_list}
-    return render(request, 'search_result.html', context)
+    return render(request, 'search_results.html', context)
