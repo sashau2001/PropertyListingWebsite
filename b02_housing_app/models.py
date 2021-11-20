@@ -32,6 +32,13 @@ class Apartment(models.Model):
                 valid_fields.append(field_name)
         return valid_fields
 
+    def save(self, *args, **kwargs):
+        # allow NULL fields
+        for field in self.field_dict:
+            if not self.__getattribute__(field):
+                self.field = None
+        super(Apartment, self).save(*args, **kwargs)
+
 
 class Review(models.Model):
     apt_name = models.ForeignKey(Apartment, on_delete=models.CASCADE)
