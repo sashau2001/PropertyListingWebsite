@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Apartment(models.Model):
     field_dict = {
@@ -12,7 +13,8 @@ class Apartment(models.Model):
         "apt_deposit": "Deposit($)",
         "apt_movein": "Move-in date",
     }
-    apt_name = models.CharField(max_length=100,primary_key=True)
+    id = models.BigAutoField(primary_key=True)
+    apt_name = models.CharField(max_length=100)
     apt_location = models.TextField()
     apt_area = models.IntegerField(null=True) # square feet
     apt_price = models.IntegerField(null=True) # in US dollars
@@ -49,14 +51,17 @@ class Review(models.Model):
     def __str__(self):
         return "\"{}\" by \"{}\"".format(self.apt_name,self.apt_reviewer)
 
-class SiteUser(models.Model):
+# class Profile(models.Model):
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # public_username = models.CharField(max_length=20)
+    # bio = models.CharField(max_length=300,null=True)
+    # searching_for_apt = models.BooleanField(default=True)
+    # price_range_min = models.IntegerField(null=True)
+    # price_range_max = models.IntegerField(null=True)
+    # desired_movein_min = models.DateField(null=True)
+    # desired_movein_max = models.DateField(null=True)
+    # desired_beds_min = models.IntegerField(null=True)
+    # desired_beds_max = models.IntegerField(null=True)
+
+class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    public_username = models.CharField(max_length=20)
-    bio = models.CharField(max_length=300,null=True)
-    searching_for_apt = models.BooleanField(default=True)
-    price_range_min = models.IntegerField(null=True)
-    price_range_max = models.IntegerField(null=True)
-    desired_movein_min = models.DateField(null=True)
-    desired_movein_max = models.DateField(null=True)
-    desired_beds_min = models.IntegerField(null=True)
-    desired_beds_max = models.IntegerField(null=True)

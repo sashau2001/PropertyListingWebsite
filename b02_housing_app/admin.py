@@ -4,4 +4,4 @@ from .models import *
 
 admin.site.register(Apartment)
 admin.site.register(Review)
-admin.site.register(SiteUser)
+admin.site.register(Profile)
