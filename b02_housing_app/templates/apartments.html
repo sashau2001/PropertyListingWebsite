@@ -47,7 +47,7 @@
     <div class="row">
     {% for t in apartment_list %}
     <div class="col-md-4">
-        {%  if t|hasattribute:'id' %}
+        {%  if t.id %}
             <h3><a href="{% url 'apartment' t.id%}">{{ t }}</a></h3>
         {%  endif %}
     </div>
