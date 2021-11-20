@@ -16,7 +16,7 @@
     width: 750px;
     height: 455px;
     padding: 10px;
-    margin-top: 0px;
+    margin-top: 50px;
     margin-right: 25px;
     margin-left: 25px;
     border: 1px black solid;
@@ -35,6 +35,10 @@
   /* make items in the list light gray when hovered over */
   .list-item:hover {
     background-color: #e7eaee;
+  }
+  .filter-container {
+    padding: 10px;
+    margin-left: 25px;
   }
 </style>
 
@@ -59,32 +63,9 @@
     </div>
 </div> -->
 
-<!-- SEARCH FILTERS -->
-<form class="p-5" action="{% url 'search_results' %}" method="get">
-    <h4>Filter your search:</h4>
-    <div class="row">
-        <div class="col-md-6">
-            <input class="form-control" name="name_query" type="text" placeholder="Search">
-            <button type="submit">Search</button>
-        </div>
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-4">
-                    <p>Min Price: </p>
-                    <input class="form-control form-control-sm" type="text" aria-label=".form-control-sm example">
-                </div>
-                <div class="col-md-4">
-                    <p>Max Price: </p>
-                    <input class="form-control form-control-sm" type="text" aria-label=".form-control-sm example">
-                </div>
-            </div>
-        </div>
-    </div>
 
-</form>
-
-<!-- LIST OF APARTMENTS -->
 <div class="row">
+    <!-- LIST OF APARTMENTS -->
     <div class="col-6">
         <div class="list-container">
         {% if apartment_list %}
@@ -102,5 +83,30 @@
             <p>No apartments are available.</p>
         {% endif %}
         </div>
+    </div>
+
+    <!-- SEARCH FILTERS -->
+    <div class="col-6">
+        <form class="filter-container p-5 mb-4" action="{% url 'search_results' %}" method="get">
+            <h4>Filter your search:</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <input class="form-control" name="name_query" type="text" placeholder="Search">
+                    <button type="submit">Search</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p>Min Price: </p>
+                            <input class="form-control form-control-sm" type="text" aria-label=".form-control-sm example">
+                        </div>
+                        <div class="col-md-4">
+                            <p>Max Price: </p>
+                            <input class="form-control form-control-sm" type="text" aria-label=".form-control-sm example">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
