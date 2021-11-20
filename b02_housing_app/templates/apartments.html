@@ -1,24 +1,49 @@
 {% include 'navbar.html' %}
 
-
-
 {% load bootstrap5 %}
 {% load socialaccount %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
+
 <style>
-.jumbotron {
-  background-image: url("uva\ banner.png");
-  background-size: cover;
-}
+    .jumbotron {
+    background-image: url("uvabanner.png");
+    background-size: cover;
+  }
+    .list-container {
+    overflow: scroll;
+    width: 750px;
+    height: 455px;
+    padding: 10px;
+    margin-top: 0px;
+    margin-right: 25px;
+    margin-left: 25px;
+    border: 1px black solid;
+    background-color: white;
+    color: black;
+  }
+  
+  /* format for items in the list-container */
+  .list-item {
+    padding: 30px;
+    /* margin-top: 40px;
+    margin-bottom: 40px; */
+    background-color: white;
+  }
+  
+  /* make items in the list light gray when hovered over */
+  .list-item:hover {
+    background-color: #e7eaee;
+  }
 </style>
-<!-- <img src="uva banner.png" class="img-fluid" alt="Responsive image"> -->
-<div class="jumbotron p-5 mb-4 text-white bg-secondary bg-gradient">
-    <!-- p-5 mb-4 text-white bg-secondary bg-gradient -->
+
+<!-- JUMBOTRON -->
+<!-- <img src="uvabanner.png" class="img-fluid" alt="Responsive image"> -->
+<!-- <div class="jumbotron p-5 mb-4 text-white bg-secondary bg-gradient">
     <h1 class="display-4">Off-Grounds Housing</h1>
     <p class="lead">Find your home today.</p>
-</div>
+</div> -->
 
 <!-- <div class="container">
     <h4>Filter your search:</h4>
@@ -32,25 +57,40 @@
             <input class="form-control form-control-sm" type="text" aria-label=".form-control-sm example">
         </div>
     </div>
-
-   
 </div> -->
 
-<form action="{% url 'search_results' %}" method="get">
+<form class="p-5" action="{% url 'search_results' %}" method="get">
     <input name="name_query" type="text" placeholder="Search">
     <button type="submit">Search</button>
+    <div class="row">
+        <div class="col-md-4">
+            <p>Min Price: </p>
+            <input class="form-control form-control-sm" type="text" aria-label=".form-control-sm example">
+        </div>
+        <div class="col-md-4">
+            <p>Max Price: </p>
+            <input class="form-control form-control-sm" type="text" aria-label=".form-control-sm example">
+        </div>
+    </div>
+
 </form>
 
-<div class="container">
-{% if apartment_list %}
-    <div class="row">
-    {% for t in apartment_list %}
-    <div class="col-md-4">
-        <h3><a href="{% url 'apartment' t.id%}">{{ t }}</a></h3>
+<!-- LIST OF APARTMENTS -->
+<div class="row">
+    <div class="col-6">
+        <div class="list-container">
+        {% if apartment_list %}
+            <div class="row">
+            {% for t in apartment_list %}
+            <div class="list-item">
+                <h3 class="p-5 mb-4"><a href="{% url 'apartment' t.id%}">{{ t }}</a></h3>
+            </div>
+            <hr style="height:3px; opacity:50%; background-color:#4186d4;">
+            {% endfor %}
+        </div>
+        {% else %}
+            <p>No apartments are available.</p>
+        {% endif %}
+        </div>
     </div>
-    {% endfor %}
-</div>
-{% else %}
-    <p>No apartments are available.</p>
-{% endif %}
 </div>
