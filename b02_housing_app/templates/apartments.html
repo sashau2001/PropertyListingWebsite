@@ -7,6 +7,7 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
+{% load apt_handling %}
 <style>
 .jumbotron {
   background-image: url("uva\ banner.png");
@@ -46,7 +47,9 @@
     <div class="row">
     {% for t in apartment_list %}
     <div class="col-md-4">
-        <h3><a href="{% url 'apartment' t.id%}">{{ t }}</a></h3>
+        {%  if t|hasattribute:'id' %}
+            <h3><a href="{% url 'apartment' t.id%}">{{ t }}</a></h3>
+        {%  endif %}
     </div>
     {% endfor %}
 </div>
