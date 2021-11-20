@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from .models import *
 from django.conf import settings
-from .forms import ReviewForm
+from .forms import ReviewForm, ApartmentForm
 
 
 
@@ -14,8 +14,18 @@ def insert_review(request):
             form_save.apt_reviewer = request.user.username
             form_save.save()
     context = {'form': form, 'insertReview': True}
-    return render(request, 'reviewform.html', context)
+    return render(request, 'default_form.html', context)
 
+def insert_apartment(request):
+    if not request.user.is_authenticated or not request.user.is_superuser:
+        return redirect('/accounts/google/login/')
+    form = ApartmentForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form_save = form.save(commit=False)
+        # change form data
+        form_save.save()
+    context = {'form': form, 'insertApartment': True}
+    return render(request, 'default_form.html', context)
 
 def reviews(request):
     review_list = Review.objects.all()
