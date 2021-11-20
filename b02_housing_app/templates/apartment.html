@@ -16,7 +16,7 @@
       {% for field in apartment|get_valid_fields %}
           <tr>
             <th scope="row">{{ field|field_desc }}</th>
-            <td>{{ apartment|getattr:field }}</td>
+            <td>{{ apartment|getattribute:field }}</td>
           </tr>
       {% endfor %}
       </tbody>
