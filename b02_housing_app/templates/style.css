@@ -1,0 +1,31 @@
+.jumbotron {
+    background-image: url("uva\ banner.png");
+    background-size: cover;
+  }
+  
+  .list-container {
+    overflow: scroll;
+    width: 550px;
+    height: 700px;
+    padding: 10px;
+    margin-top: 0px;
+    margin-right: 25px;
+    margin-left: 25px;
+    border: 1px black solid;
+    background-color: white;
+    color: black;
+  }
+  
+  /* format for items in the list-container */
+  .list-item {
+    padding: 30px;
+    margin-left: 40px;
+    margin-right: 40px;
+    background-color: white;
+  }
+  
+  /* make items in the list light gray when hovered over */
+  .list-item:hover {
+    background-color: #e7eaee;
+  }
+  

@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, render
 from .models import *
+from django.db.models import Max
 from django.conf import settings
-from .forms import ReviewForm
+from .forms import *
 
 
 
@@ -14,8 +15,29 @@ def insert_review(request):
             form_save.apt_reviewer = request.user.username
             form_save.save()
     context = {'form': form, 'insertReview': True}
-    return render(request, 'reviewform.html', context)
+    return render(request, 'default_form.html', context)
 
+def insert_apartment(request):
+    if not request.user.is_authenticated or not request.user.is_superuser:
+        return redirect('/accounts/google/login/')
+    form = ApartmentForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form_save = form.save(commit=False)
+        # set ID
+        form_save.id = get_new_id()
+        form_save.save()
+    context = {'form': form, 'insertApartment': True}
+    return render(request, 'default_form.html', context)
+
+def get_new_id():
+    id_list = sorted(Apartment.objects.values_list('id', flat=True))
+    new_id = 1
+    for value in id_list:
+        if new_id<value:
+            break
+        if new_id==value:
+            new_id+=1
+    return new_id
 
 def reviews(request):
     review_list = Review.objects.all()
@@ -40,3 +62,10 @@ def apartment(request,pk):
                'apartments': True,
                'location': apt.apt_location}
     return render(request,'apartment.html', context)
+
+#Filter by name for now
+def search_results(request):
+    query = request.GET.get('name_query')
+    filtered_list  = Apartment.objects.filter(apt_name__icontains=query)
+    context = {'filtered_list': filtered_list}
+    return render(request, 'search_results.html', context)

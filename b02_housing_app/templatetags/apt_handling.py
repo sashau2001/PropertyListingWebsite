@@ -3,11 +3,15 @@ from b02_housing_app.models import *
 register = template.Library()
 
 @register.filter
-def getattr (obj, attribute):
+def getattribute (obj, attribute):
     try:
         return obj.__getattribute__(attribute)
     except:
         return "ERROR"
+
+@register.filter
+def hasattribute (obj, attribute):
+    return hasattr(obj, attribute)
 
 @register.filter
 def get_valid_fields(obj):

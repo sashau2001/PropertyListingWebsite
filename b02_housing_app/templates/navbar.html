@@ -1,5 +1,11 @@
 {% load socialaccount %}
 
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="{% url 'apartments'%}">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/d/dd/University_of_Virginia_Rotunda_logo.svg" width="34" height="34" class="d-inline-block align-top" alt="">
+      UVA Off Grounds Housing
+  </a>
+
 <ul class="nav nav-pills nav-fill">
   <li class="nav-item">
     <a class="nav-link {% if apartments %}active{% endif %}" href="{% url 'apartments'%}">View Apartment Listings</a>
@@ -11,6 +17,9 @@
     <a class="nav-link {% if insertReview %}active{% endif %}" href="{% url 'insert_review'%}">Write an Apartment Review</a>
   </li>
   <li class="nav-item">
+    <a class="nav-link {% if insertApartment %}active{% endif %}" href="{% url 'insert_apartment'%}">Submit an Apartment Listing</a>
+  </li>
+  <li class="nav-item">
       {% if user.is_authenticated %}
         <a class="nav-link" href="{% url 'logout'%}">Logout</a>
       {%  else %}
@@ -18,3 +27,4 @@
       {% endif %}
   </li>
 </ul>
+</nav>
