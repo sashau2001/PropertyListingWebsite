@@ -21,9 +21,23 @@ def insert_apartment(request):
     if not request.user.is_authenticated or not request.user.is_superuser:
         return redirect('/accounts/google/login/')
     form = ApartmentForm(request.POST or None, request.FILES or None)
-    form.save()
+    if form.is_valid():
+        form_save = form.save(commit=False)
+        # set ID
+        form_save.id = get_new_id()
+        form_save.save()
     context = {'form': form, 'insertApartment': True}
     return render(request, 'default_form.html', context)
+
+def get_new_id():
+    id_list = sorted(Apartment.objects.values_list('id', flat=True))
+    new_id = 1
+    for value in id_list:
+        if new_id<value:
+            break
+        if new_id==value:
+            new_id+=1
+    return new_id
 
 def reviews(request):
     review_list = Review.objects.all()
