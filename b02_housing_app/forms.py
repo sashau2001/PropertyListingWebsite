@@ -1,5 +1,5 @@
 from django import forms
-from .models import Apartment,Review
+from .models import *
 
 
 class ReviewForm(forms.ModelForm):
@@ -12,3 +12,8 @@ class ApartmentForm(forms.ModelForm):
         model = Apartment
         fields = ["apt_name","apt_location"]
         fields += list(Apartment.field_dict.keys())
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = list(Profile.field_dict.keys())

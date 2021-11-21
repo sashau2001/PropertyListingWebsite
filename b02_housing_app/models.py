@@ -3,7 +3,22 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-class Apartment(models.Model):
+class CustomTemplate:
+    field_dict = {}
+
+    @classmethod
+    def field_desc(cls,field_name):
+        return cls.field_dict[field_name]
+
+    def get_valid_fields(self):
+        cls = self.__class__
+        valid_fields = []
+        for field_name in cls.field_dict.keys():
+            if self.__getattribute__(field_name) is not None:
+                valid_fields.append(field_name)
+        return valid_fields
+
+class Apartment(models.Model,CustomTemplate):
     field_dict = {
         "apt_price": "Monthly rent($)",
         "apt_area": "Area (sq ft)",
@@ -25,15 +40,6 @@ class Apartment(models.Model):
     apt_movein = models.DateField(null=True,blank=True)
     def __str__(self):
         return self.apt_name
-    @staticmethod
-    def field_desc(field_name):
-        return Apartment.field_dict[field_name]
-    def get_valid_fields(self):
-        valid_fields = []
-        for field_name in Apartment.field_dict.keys():
-            if self.__getattribute__(field_name) is not None:
-                valid_fields.append(field_name)
-        return valid_fields
 
 
 class Review(models.Model):
@@ -51,14 +57,25 @@ class Review(models.Model):
     def __str__(self):
         return "\"{}\" by \"{}\"".format(self.apt_name,self.apt_reviewer)
 
-class Profile(models.Model):
+class Profile(models.Model, CustomTemplate):
+    field_dict = {
+        "public_username": "Username",
+        "bio": "Bio",
+        "searching_for_apt": "Searching For Apartment?",
+        "price_range_min": "Minimum rent",
+        "price_range_max": "Maximum rent",
+        "desired_movein_min": "Earliest move-in date",
+        "desired_movein_max": "Latest move-in date",
+        "desired_beds_min": "Minimum bedrooms",
+        "desired_beds_max": "Maximum bedrooms"
+    }
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     public_username = models.CharField(max_length=20)
-    bio = models.CharField(max_length=300,null=True)
-    searching_for_apt = models.BooleanField(default=True)
-    price_range_min = models.IntegerField(null=True)
-    price_range_max = models.IntegerField(null=True)
-    desired_movein_min = models.DateField(null=True)
-    desired_movein_max = models.DateField(null=True)
-    desired_beds_min = models.IntegerField(null=True)
-    desired_beds_max = models.IntegerField(null=True)
+    bio = models.CharField(max_length=300,null=True,blank=True)
+    searching_for_apt = models.BooleanField(default=True,blank=True)
+    price_range_min = models.IntegerField(null=True,blank=True)
+    price_range_max = models.IntegerField(null=True,blank=True)
+    desired_movein_min = models.DateField(null=True,blank=True)
+    desired_movein_max = models.DateField(null=True,blank=True)
+    desired_beds_min = models.IntegerField(null=True,blank=True)
+    desired_beds_max = models.IntegerField(null=True,blank=True)
