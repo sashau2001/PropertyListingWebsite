@@ -30,5 +30,6 @@ urlpatterns = [
     path('reviews/', views.reviews, name='reviews'),
     path('apartment/<int:pk>/', views.apartment, name='apartment'),
     path('apartments/', views.apartments, name='apartments'),
+    path('my_profile/',views.my_profile, name='my_profile'),
     path('search/', views.search_results, name='search_results')
 ]

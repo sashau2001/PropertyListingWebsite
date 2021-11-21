@@ -8,19 +8,17 @@
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
 
-{% if apartment %}
-    <h1>{{ apartment.apt_name }}</h1>
-    {%  include 'map.html' %}
+{% if profile %}
     <table class="table">
       <tbody>
-      {% for field in apartment|get_valid_fields %}
+      {% for field in profile|get_valid_fields %}
           <tr>
-            <th scope="row">{{ apartment|field_desc:field }}</th>
-            <td>{{ apartment|getattribute:field }}</td>
+            <th scope="row">{{ profile|field_desc:field }}</th>
+            <td>{{ profile|getattribute:field }}</td>
           </tr>
       {% endfor %}
       </tbody>
     </table>
 {% else %}
-    <p>No apartments are available.</p>
+    <p>No user profiles are available.</p>
 {% endif %}

@@ -1,5 +1,4 @@
 from django import template
-from b02_housing_app.models import *
 register = template.Library()
 
 @register.filter
@@ -18,5 +17,6 @@ def get_valid_fields(obj):
     return obj.get_valid_fields()
 
 @register.filter
-def field_desc(field_name):
-    return Apartment.field_desc(field_name)
+def field_desc(obj,field_name):
+    obj_class = obj.__class__
+    return obj_class.field_desc(field_name)

@@ -1,6 +1,5 @@
 from django.shortcuts import redirect, render
 from .models import *
-from django.db.models import Max
 from django.conf import settings
 from .forms import *
 
@@ -58,10 +57,30 @@ def apartment(request,pk):
     apt= Apartment.objects.get(pk=pk)
     context = {'google_api_key': settings.GOOGLE_API_KEY,
                'apartment': apt,
-               'field_list': Apartment._meta.local_fields,
                'apartments': True,
                'location': apt.apt_location}
     return render(request,'apartment.html', context)
+
+def my_profile(request):
+    # not logged in
+    if not request.user.is_authenticated:
+        return redirect('/accounts/google/login/')
+    context = {'profiles': True, 'editable': True}
+    prof_list = Profile.objects.filter(user=request.user)
+    # no user profile exists yet
+    if not prof_list.exists():
+        form = ProfileForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form_save = form.save(commit=False)
+            # set user
+            form_save.user = request.user
+            form_save.save()
+        context = {'form': form, 'profile': True}
+        return render(request, 'default_form.html', context)
+    # user profile already exists
+    prof = prof_list[0]
+    context['profile'] = prof
+    return render(request, 'profile.html', context)
 
 #Filter by name for now
 def search_results(request):
