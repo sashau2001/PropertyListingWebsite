@@ -170,6 +170,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 # Activate Django-Heroku.
 if 'HEROKU' in os.environ:
+    DEBUG=False
     django_heroku.settings(locals())
 
 GOOGLE_API_KEY="AIzaSyDRvFdrSOISzekXuJ76SzRkAeW2cglMkMY"
+SESSION_COOKIE_SECURE=True
