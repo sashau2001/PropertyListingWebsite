@@ -3,6 +3,7 @@ from .models import *
 from django.conf import settings
 from .forms import *
 from django.contrib import messages
+import requests,json
 
 def insert_review(request):
     if request.method == 'POST':
@@ -86,16 +87,16 @@ def my_profile(request):
     context['profile'] = prof
     return render(request, 'profile.html', context)
 
-#Filter by name for now
 def search_results(request):
-    query = request.GET.get('name_query')
-    filtered_list  = Apartment.objects.filter(apt_name__icontains=query)
-    context = {'filtered_list': filtered_list, 'query': query}
-    return render(request, 'search_results.html', context)
+    
+    price_query = request.GET.get('price')    
+    name_query = request.GET.get('name')
+    # Name filtering
+    if price_query is not None:
+        apt_list  = list(Apartment.objects.filter(apt_name__icontains=name_query).order_by(price_query))
+    else:
+        apt_list  = list(Apartment.objects.filter(apt_name__icontains=name_query))
 
-#Sort by price
-def search_price(request):
-    query = request.GET.get('exampleRadios')
-    filtered_list  = Apartment.objects.all().order_by(query)
-    context = {'filtered_list': filtered_list, 'query': query}
-    return render(request, 'apartment.html', context)
+
+    context = {'apt_list': apt_list}
+    return render(request, 'search_results.html', context)
