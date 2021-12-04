@@ -6,15 +6,31 @@ from .forms import *
 
 
 
+# def insert_review(request):
+#     if not request.user.is_authenticated:
+#         return redirect('/accounts/google/login/')
+#     form = ReviewForm(request.POST or None, request.FILES or None)
+    # if form.is_valid():
+    #         form_save = form.save(commit=False)
+    #         form_save.apt_reviewer = request.user.username
+    #         form_save.save()
+#             # messages.success(request, "Submitted succesfully")
+#     context = {'form': form, 'insertReview': True}
+#     return render(request, 'default_form.html', context)
+
 def insert_review(request):
-    if not request.user.is_authenticated:
-        return redirect('/accounts/google/login/')
-    form = ReviewForm(request.POST or None, request.FILES or None)
-    if form.is_valid():
+    if request.method == 'POST':
+        form = ReviewForm(request.POST or None, request.FILES or None)
+        
+        if form.is_valid():
+            context = {'form': ReviewForm(request.GET), 'insertReview': True}
             form_save = form.save(commit=False)
             form_save.apt_reviewer = request.user.username
             form_save.save()
-            # messages.success(request, "Submitted succesfully")
+            messages.success(request, 'Submitted successfully')
+            return render(request, 'default_form.html', context)
+    else:
+        form = ReviewForm()
     context = {'form': form, 'insertReview': True}
     return render(request, 'default_form.html', context)
 
