@@ -98,11 +98,12 @@ def search_results(request):
         for apt in apt_list:
             apt.dist = get_distance(location_query, apt.apt_location)
         apt_list.sort(key=lambda k: k.dist)
+    apt_list = [apt for apt in apt_list if apt.dist>=0] # remove apts with dist -1
 
     # Distance filtering
     maxdist_query = request.GET.get('maxdist')
     if location_query is not None and maxdist_query is not None:
-        maxdist = float(maxdist_query)
+        maxdist = float(maxdist_query)*1000 # convert from km to m
         apt_list = [apt for apt in apt_list if apt.dist<maxdist]
 
     context = {'apt_list': apt_list}
@@ -110,8 +111,11 @@ def search_results(request):
 
 
 def get_distance(source,dest):
-    url = 'https://api.distancematrix.ai/maps/api/distancematrix/json?'
-    req = requests.get(url + 'origins=' + source +
-                     '&destinations=' + dest +
-                     '&key=' + settings.DISTANCEMATRIX_API_KEY)
-    return req.json()['rows'][0]['elements'][0]['distance']['value']
+    try:
+        url = 'https://api.distancematrix.ai/maps/api/distancematrix/json?'
+        req = requests.get(url + 'origins=' + source +
+                         '&destinations=' + dest +
+                         '&key=' + settings.DISTANCEMATRIX_API_KEY)
+        return req.json()['rows'][0]['elements'][0]['distance']['value']
+    except:
+        return -1 # invaid address?
