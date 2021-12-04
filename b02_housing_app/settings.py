@@ -33,7 +33,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['b02-housing-app.herokuapp.com','localhost','127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -178,3 +177,10 @@ if 'HEROKU' in os.environ:
 
 GOOGLE_API_KEY="AIzaSyDRvFdrSOISzekXuJ76SzRkAeW2cglMkMY"
 SESSION_COOKIE_SECURE=True
+
+cloudinary.config( 
+  cloud_name = "b-02", 
+  api_key = "159582453344778", 
+  api_secret = "08kx6BWOO5v-mBFm2d9lNcuuPL4",
+  secure = True
+)
