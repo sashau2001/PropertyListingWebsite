@@ -43,6 +43,9 @@
   }
 </style>
 
+<script type="text/javascript" src="https://product-gallery.cloudinary.com/all.js"></script>
+
+
 <div class="row">
     <!-- LIST OF APARTMENTS -->
     <div class="col-6">
@@ -56,6 +59,18 @@
                 {%  endif %}
             </div>
             <hr style="height:3px; opacity:50%; background-color:#4186d4;">
+            <div class="wrap" id="wrap" style="max-width:80%;margin:auto"></div>
+            <script>
+            cloudinary.galleryWidget({
+                container: '#wrap',
+                cloudName: 'b-02',
+                mediaAssets: [
+                    {tag: "sample"}, 
+                    {tag: "sample", mediaType: "image"}
+                ],
+            }).render();
+
+            </script>
             {% endfor %}
         </div>
         {% else %}
@@ -86,7 +101,14 @@
                     High to Low
                 </label>
             </div>
-            
         </form>
+        <div id="logo">
+            {# This will render the image fetched from a remote HTTP URL using Cloudinary #}
+            {% cloudinary "https://res.cloudinary.com/b-02/image/upload/v1638648310/sample.jpg
+            " %}
+            {% cloudinary "http://cloudinary.com/images/logo.png" type="fetch" %}
+            {% cloudinary "https://upload.wikimedia.org/wikipedia/commons/1/13/Benedict_Cumberbatch_2011.png" type="fetch"}
+        </div>
     </div>
 </div>
+
