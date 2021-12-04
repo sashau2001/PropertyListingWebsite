@@ -101,7 +101,7 @@ def search_results(request):
 
     # Distance filtering
     maxdist_query = request.GET.get('maxdist')
-    if maxdist_query is not None:
+    if location_query is not None and maxdist_query is not None:
         maxdist = float(maxdist_query)
         apt_list = [apt for apt in apt_list if apt.dist<maxdist]
 
