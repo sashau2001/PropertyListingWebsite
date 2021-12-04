@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from .models import *
 from django.conf import settings
 from .forms import *
-
+from django.contrib import messages
 
 
 
