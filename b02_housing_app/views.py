@@ -4,9 +4,6 @@ from django.conf import settings
 from .forms import *
 from django.contrib import messages
 
-
-
-
 def insert_review(request):
     if request.method == 'POST':
         form = ReviewForm(request.POST or None, request.FILES or None)
@@ -95,3 +92,10 @@ def search_results(request):
     filtered_list  = Apartment.objects.filter(apt_name__icontains=query)
     context = {'filtered_list': filtered_list, 'query': query}
     return render(request, 'search_results.html', context)
+
+#Sort by price
+def search_price(request):
+    query = request.GET.get('exampleRadios')
+    filtered_list  = Apartment.objects.all().order_by(query)
+    context = {'filtered_list': filtered_list, 'query': query}
+    return render(request, 'apartment.html', context)
