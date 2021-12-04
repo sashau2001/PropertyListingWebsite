@@ -87,20 +87,28 @@ def my_profile(request):
     context['profile'] = prof
     return render(request, 'profile.html', context)
 
+#Filter by name for now
 def search_results(request):
-    
-    price_query = request.GET.get('price')    
     name_query = request.GET.get('name')
-
+    price_query = request.GET.get('price')
     if price_query is None:
         price_query = 'apt_price'
-
+    # Name filtering and price
     if name_query is None:
-        name_query = ''
-    
-    # Name filtering
-    apt_list  = list(Apartment.objects.filter(apt_name__icontains=name_query).order_by(price_query))
-  
+        apt_list = Apartment.objects.all().order_by(price_query)
+    else:
+        apt_list = Apartment.objects.filter(apt_name__icontains=name_query).order_by(price_query)
 
-    context = {'apt_list': apt_list}
+    context = {'filtered_list': apt_list}
     return render(request, 'search_results.html', context)
+
+
+def get_distance(source,dest):
+    try:
+        url = 'https://api.distancematrix.ai/maps/api/distancematrix/json?'
+        req = requests.get(url + 'origins=' + source +
+                         '&destinations=' + dest +
+                         '&key=' + settings.DISTANCEMATRIX_API_KEY)
+        return req.json()['rows'][0]['elements'][0]['distance']['value']
+    except:
+        return -1 # invaid address?

@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.http import HttpRequest
+
 import sys
 
 from .models import Apartment, Review
@@ -151,6 +152,6 @@ class SearchTest(TestCase):
         request = HttpRequest()
         request.GET.__setitem__('name_query','Nothing')
         response = search_results(request)
-        sys.stderr.write(repr(response.content) + '\n') 
+        # sys.stderr.write(repr(response.content) + '\n') 
         self.assertNotContains(response, 'DummyApt') 
 
