@@ -1,0 +1,10 @@
+{% if messages %}
+    {% for t in messages %}
+        <div>
+            <button type="button" class="close" data-dismiss="alert">
+                x
+            </button>
+            <strong>{{t}}</strong>
+        </div>
+    {% endfor %}
+{% endif %}

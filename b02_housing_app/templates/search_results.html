@@ -9,7 +9,7 @@
 {% bootstrap_messages %}
 
 
-<h1>Search Results</h1>
+<h1>Search Results for "{{query}}"</h1>
 
 <div class="container">
     <div class="row">
@@ -17,5 +17,7 @@
     <div class="col-md-4">
         <h3><a href="{% url 'apartment' t.id%}">{{ t }}</a></h3>
     </div>
+    {% empty %}
+    No results
     {% endfor %}
 </div>

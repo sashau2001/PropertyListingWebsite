@@ -5,6 +5,7 @@ from .forms import *
 
 
 
+
 def insert_review(request):
     if not request.user.is_authenticated:
         return redirect('/accounts/google/login/')
@@ -13,6 +14,7 @@ def insert_review(request):
             form_save = form.save(commit=False)
             form_save.apt_reviewer = request.user.username
             form_save.save()
+            # messages.success(request, "Submitted succesfully")
     context = {'form': form, 'insertReview': True}
     return render(request, 'default_form.html', context)
 
@@ -86,5 +88,5 @@ def my_profile(request):
 def search_results(request):
     query = request.GET.get('name_query')
     filtered_list  = Apartment.objects.filter(apt_name__icontains=query)
-    context = {'filtered_list': filtered_list}
+    context = {'filtered_list': filtered_list, 'query': query}
     return render(request, 'search_results.html', context)
