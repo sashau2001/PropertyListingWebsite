@@ -133,8 +133,10 @@ class GoogleMapTest(TestCase):
 
 class SearchTest(TestCase):
     def setUp(self):
-        apartmentTest = Apartment(apt_name='DummyApt',apt_location='St.New Lenox, IL 60451')
+        apartmentTest = Apartment(apt_name='DummyApt',apt_location='St.New Lenox, IL 60451', apt_price=100)
+        apartmentTest2 = Apartment(apt_name='ExpensiveApt',apt_location='St.New Lenox, IL 60451', apt_price=1000)
         apartmentTest.save()
+        apartmentTest2.save()
     
     #Simple test for apartment in list
     def test_simple_search(self):
@@ -149,5 +151,6 @@ class SearchTest(TestCase):
         request = HttpRequest()
         request.GET.__setitem__('name_query','Nothing')
         response = search_results(request)
-        sys.stderr.write(repr(response.content) + '\n')
+        sys.stderr.write(repr(response.content) + '\n') 
         self.assertNotContains(response, 'DummyApt') 
+

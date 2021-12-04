@@ -91,12 +91,16 @@ def search_results(request):
     
     price_query = request.GET.get('price')    
     name_query = request.GET.get('name')
-    # Name filtering
-    if price_query is not None:
-        apt_list  = list(Apartment.objects.filter(apt_name__icontains=name_query).order_by(price_query))
-    else:
-        apt_list  = list(Apartment.objects.filter(apt_name__icontains=name_query))
 
+    if price_query is None:
+        price_query = 'apt_price'
+
+    if name_query is None:
+        name_query = ''
+    
+    # Name filtering
+    apt_list  = list(Apartment.objects.filter(apt_name__icontains=name_query).order_by(price_query))
+  
 
     context = {'apt_list': apt_list}
     return render(request, 'search_results.html', context)
