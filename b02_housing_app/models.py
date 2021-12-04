@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+# from cloudinary.models import CloudinaryField
+
+# class Photo(models.Model):
+#   image = CloudinaryField('image')
 
 class CustomTemplate:
     field_dict = {}
@@ -79,3 +83,4 @@ class Profile(models.Model, CustomTemplate):
     desired_movein_max = models.DateField(null=True,blank=True)
     desired_beds_min = models.IntegerField(null=True,blank=True)
     desired_beds_max = models.IntegerField(null=True,blank=True)
+
