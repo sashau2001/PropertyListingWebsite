@@ -92,19 +92,20 @@ def search_results(request):
     else:
         apt_list  = list(Apartment.objects.filter(apt_name__icontains=name_query))
 
-
+    # Distance sorting (w/r to location)
     location_query = request.GET.get('location')
     if location_query is not None:
         for apt in apt_list:
             apt.dist = get_distance(location_query, apt.apt_location)
         apt_list.sort(key=lambda k: k.dist)
 
+    # Distance filtering
     maxdist_query = request.GET.get('maxdist')
     if maxdist_query is not None:
         maxdist = float(maxdist_query)
         apt_list = [apt for apt in apt_list if apt.dist<maxdist]
 
-    context = {'filtered_list': apt_list}
+    context = {'apt_list': apt_list}
     return render(request, 'search_results.html', context)
 
 
