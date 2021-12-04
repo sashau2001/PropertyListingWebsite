@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from .models import *
 from django.conf import settings
 from .forms import *
+import requests,json
 
 
 
@@ -84,7 +85,32 @@ def my_profile(request):
 
 #Filter by name for now
 def search_results(request):
-    query = request.GET.get('name_query')
-    filtered_list  = Apartment.objects.filter(apt_name__icontains=query)
-    context = {'filtered_list': filtered_list}
+    name_query = request.GET.get('name')
+    # Name filtering
+    if name_query is None:
+        apt_list = list(Apartment.objects.all())
+    else:
+        apt_list  = list(Apartment.objects.filter(apt_name__icontains=name_query))
+
+
+    location_query = request.GET.get('location')
+    if location_query is not None:
+        for apt in apt_list:
+            apt.dist = get_distance(location_query, apt.apt_location)
+        apt_list.sort(key=lambda k: k.dist)
+
+    maxdist_query = request.GET.get('maxdist')
+    if maxdist_query is not None:
+        maxdist = float(maxdist_query)
+        apt_list = [apt for apt in apt_list if apt.dist<maxdist]
+
+    context = {'filtered_list': apt_list}
     return render(request, 'search_results.html', context)
+
+
+def get_distance(source,dest):
+    url = 'https://api.distancematrix.ai/maps/api/distancematrix/json?'
+    req = requests.get(url + 'origins=' + source +
+                     '&destinations=' + dest +
+                     '&key=' + settings.DISTANCEMATRIX_API_KEY)
+    return req.json()['rows'][0]['elements'][0]['distance']['value']
