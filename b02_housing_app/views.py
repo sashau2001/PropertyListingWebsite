@@ -6,17 +6,6 @@ from django.contrib import messages
 
 
 
-# def insert_review(request):
-#     if not request.user.is_authenticated:
-#         return redirect('/accounts/google/login/')
-#     form = ReviewForm(request.POST or None, request.FILES or None)
-    # if form.is_valid():
-    #         form_save = form.save(commit=False)
-    #         form_save.apt_reviewer = request.user.username
-    #         form_save.save()
-#             # messages.success(request, "Submitted succesfully")
-#     context = {'form': form, 'insertReview': True}
-#     return render(request, 'default_form.html', context)
 
 def insert_review(request):
     if request.method == 'POST':
