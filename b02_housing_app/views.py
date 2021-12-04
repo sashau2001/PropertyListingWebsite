@@ -98,7 +98,7 @@ def search_results(request):
         for apt in apt_list:
             apt.dist = get_distance(location_query, apt.apt_location)
         apt_list.sort(key=lambda k: k.dist)
-    apt_list = [apt for apt in apt_list if apt.dist>=0] # remove apts with dist -1
+        apt_list = [apt for apt in apt_list if apt.dist>=0] # remove apts with dist -1
 
     # Distance filtering
     maxdist_query = request.GET.get('maxdist')
