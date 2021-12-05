@@ -93,7 +93,7 @@ def search_results(request):
         apt_list  = list(Apartment.objects.filter(apt_name__icontains=name_query))
     # Distance sorting (w/r to location)
     location_query = request.GET.get('location')
-    if location_query is not None:
+    if location_query is not None and location_query!='':
         for apt in apt_list:
             apt.dist = get_distance(location_query, apt.apt_location)
         apt_list.sort(key=lambda k: k.dist)
