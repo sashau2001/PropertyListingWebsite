@@ -176,6 +176,7 @@ if 'HEROKU' in os.environ:
     django_heroku.settings(locals())
 
 GOOGLE_API_KEY="AIzaSyDRvFdrSOISzekXuJ76SzRkAeW2cglMkMY"
+DISTANCEMATRIX_API_KEY="qtwyC3nIViwip1kptceMeMdVdfqZD"
 SESSION_COOKIE_SECURE=True
 
 cloudinary.config( 
