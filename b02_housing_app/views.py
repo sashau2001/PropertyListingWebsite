@@ -4,6 +4,7 @@ from django.conf import settings
 from .forms import *
 from django.contrib import messages
 import requests,json
+from django.core.paginator import Paginator
 
 
 
@@ -61,7 +62,10 @@ def review(request,pk):
 
 def apartments(request):
     apartment_list = Apartment.objects.all()
-    context = {'apartment_list': apartment_list, 'apartments': True}
+    p = Paginator(apartment_list, 8)
+    page_obj = p.page(1)
+
+    context = {'apartment_list': apartment_list, 'apartments': True, 'page_obj': page_obj}
     return render(request, 'apartments.html', context)
 
 def apartment(request,pk):

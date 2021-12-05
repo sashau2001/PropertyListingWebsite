@@ -11,22 +11,22 @@
     background-image: url("uvabanner.png");
     background-size: cover;
   }
-    .list-container {
-    overflow: scroll;
-    width: 750px;
-    height: 455px;
-    padding: 10px;
-    margin-top: 50px;
-    margin-right: 25px;
-    margin-left: 25px;
-    border: 1px black solid;
-    background-color: white;
-    color: black;
-  }
+<!--    .list-container {-->
+<!--    overflow: auto;-->
+<!--    width: 800px;-->
+<!--    height: 800px;-->
+<!--    padding: 10px;-->
+<!--    margin-top: 30px;-->
+<!--    margin-right: 5px;-->
+<!--    margin-left: 5px;-->
+<!--    border: 1px black solid;-->
+<!--    background-color: white;-->
+<!--    color: black;-->
+<!--  }-->
   
   /* format for items in the list-container */
   .list-item {
-    padding: 30px;
+    padding: .25px;
     /* margin-top: 40px;
     margin-bottom: 40px; */
     background-color: white;
@@ -45,10 +45,10 @@
 <div class="row">
     <!-- LIST OF APARTMENTS -->
     <div class="col-6">
-        <div class="list-container">
+<!--        <div class="list-container">-->
         {% if apartment_list %}
             <div class="row">
-            {% for t in apartment_list %}
+            {% for t in page_obj.object_list %}
             <div class="list-item">
                 {%  if t.id %}
                 <h3 class="p-5 mb-4"><a href="{% url 'apartment' t.id%}">{{ t }}</a></h3>
@@ -56,7 +56,7 @@
             </div>
             <hr style="height:3px; opacity:50%; background-color:#4186d4;">
             {% endfor %}
-        </div>
+<!--        </div>-->
         {% else %}
             <p>No apartments are available.</p>
         {% endif %}
