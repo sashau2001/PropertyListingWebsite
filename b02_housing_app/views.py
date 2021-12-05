@@ -3,7 +3,6 @@ from .models import *
 from django.conf import settings
 from .forms import *
 
-
 def insert_review(request):
     if not request.user.is_authenticated:
         return redirect('/accounts/google/login/')
