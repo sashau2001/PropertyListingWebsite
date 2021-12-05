@@ -1,11 +1,5 @@
 from django import forms
 from .models import *
-# from django.forms import ModelForm      
-# from .models import Photo
-
-# class PhotoForm(ModelForm):
-#   class Meta:
-#       model = Photo
 
 class ReviewForm(forms.ModelForm):
     class Meta:
