@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os, sys
 import django_heroku
+import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,12 +29,14 @@ SECRET_KEY = 'django-insecure-e=%(rs3jj0_d2t^wrs5j&61hp&e^evk0p8w%(wcp!k0szs5sve
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['b02-housing-app.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['b02-housing-app.herokuapp.com','localhost','127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'bootstrap5',
+    'b02_housing_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'b02_housing_app',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -141,7 +144,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Google Login
 SITE_ID = 4
@@ -167,4 +170,9 @@ AUTHENTICATION_BACKENDS = [
 ]
 # Activate Django-Heroku.
 if 'HEROKU' in os.environ:
+    DEBUG=False
     django_heroku.settings(locals())
+
+GOOGLE_API_KEY="AIzaSyDRvFdrSOISzekXuJ76SzRkAeW2cglMkMY"
+DISTANCEMATRIX_API_KEY="qtwyC3nIViwip1kptceMeMdVdfqZD"
+SESSION_COOKIE_SECURE=True

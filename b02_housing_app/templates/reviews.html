@@ -1,0 +1,32 @@
+ {% include 'navbar.html' %}
+
+
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+
+{% if review_list %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Apartment</th>
+                <th scope="col">Reviewer</th>
+                <th scope="col">Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for review in review_list  %}
+                <tr>
+                    <th scope="row"><a href="{% url 'review' review.id%}">{{ review.apt_name }}</a></th>
+                    <th scope="row">{{ review.apt_reviewer }}</th>
+                    <th scope="row">{{ review.apt_stars }}/5</th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No reviews are available.</p>
+{% endif %}
