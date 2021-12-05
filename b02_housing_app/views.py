@@ -91,7 +91,6 @@ def search_results(request):
         apt_list = list(Apartment.objects.all())
     else:
         apt_list  = list(Apartment.objects.filter(apt_name__icontains=name_query))
-    import pdb; pdb.set_trace()
     # Distance sorting (w/r to location)
     location_query = request.GET.get('location')
     if location_query is not None:
