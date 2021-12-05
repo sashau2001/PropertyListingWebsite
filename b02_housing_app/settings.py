@@ -14,7 +14,9 @@ from pathlib import Path
 import os, sys
 import django_heroku
 import dj_database_url
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +33,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['b02-housing-app.herokuapp.com','localhost','127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,7 +48,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google'
+    'allauth.socialaccount.providers.google',
+    'cloudinary'
 ]
 
 MIDDLEWARE = [
@@ -176,3 +178,10 @@ if 'HEROKU' in os.environ:
 GOOGLE_API_KEY="AIzaSyDRvFdrSOISzekXuJ76SzRkAeW2cglMkMY"
 DISTANCEMATRIX_API_KEY="qtwyC3nIViwip1kptceMeMdVdfqZD"
 SESSION_COOKIE_SECURE=True
+
+cloudinary.config( 
+  cloud_name = "b-02", 
+  api_key = "159582453344778", 
+  api_secret = "08kx6BWOO5v-mBFm2d9lNcuuPL4",
+  secure = True
+)
