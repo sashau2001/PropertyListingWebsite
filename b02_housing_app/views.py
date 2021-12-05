@@ -94,6 +94,7 @@ def my_profile(request):
 def search_results(request):
     name_query = request.GET.get('name')
     price_query = request.GET.get('price')
+   
     if price_query is None:
         price_query = 'apt_price'
     # Name filtering and price
