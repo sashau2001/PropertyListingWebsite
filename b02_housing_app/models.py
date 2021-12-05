@@ -39,6 +39,8 @@ class Apartment(models.Model,CustomTemplate):
     apt_deposit = models.IntegerField(null=True,blank=True) # in US dollars
     apt_movein = models.DateField(null=True,blank=True)
     def __str__(self):
+        if hasattr(self,'dist'): # for search results
+            return "{} ({:.1f} km)".format(self.apt_name, self.dist/1000) # Apartment (3.2 km)
         return self.apt_name
 
 

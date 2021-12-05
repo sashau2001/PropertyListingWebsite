@@ -142,7 +142,7 @@ class SearchTest(TestCase):
     #Simple test for apartment in list
     def test_simple_search(self):
         request = HttpRequest()
-        request.GET.__setitem__('name_query','Dummy')
+        request.GET.__setitem__('name','Dummy')
         response = search_results(request)
         # sys.stderr.write(repr(response.content) + '\n')
         self.assertContains(response, 'DummyApt') 
@@ -150,7 +150,7 @@ class SearchTest(TestCase):
     #Simple test for apartment not in list
     def test_not_contain(self):
         request = HttpRequest()
-        request.GET.__setitem__('name_query','Nothing')
+        request.GET.__setitem__('name','Nothing')
         response = search_results(request)
         # sys.stderr.write(repr(response.content) + '\n') 
         # sys.stderr.write(repr(request.GET.__getitem__('name_query')) + '\n')

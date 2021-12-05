@@ -5,6 +5,9 @@ from .forms import *
 from django.contrib import messages
 import requests,json
 
+
+
+
 def insert_review(request):
     if not request.user.is_authenticated:
         return redirect('/accounts/google/login/')
@@ -103,7 +106,21 @@ def search_results(request):
     else:
         apt_list = list(Apartment.objects.filter(apt_name__icontains=name_query).order_by(price_query))
 
-    context = {'filtered_list': apt_list, 'name_query': name_query}
+    # Distance sorting (w/r to location)
+    location_query = request.GET.get('location')
+    if location_query is not None and location_query!='':
+        for apt in apt_list:
+            apt.dist = get_distance(location_query, apt.apt_location)
+        apt_list.sort(key=lambda k: k.dist)
+        apt_list = [apt for apt in apt_list if apt.dist>=0] # remove apts with dist -1
+
+    # Distance filtering
+    maxdist_query = request.GET.get('maxdist')
+    if location_query is not None and location_query!='' and maxdist_query is not None and maxdist_query!='':
+        maxdist = float(maxdist_query)*1000 # convert from km to m
+        apt_list = [apt for apt in apt_list if apt.dist<maxdist]
+
+    context = {'apt_list': apt_list, 'name_query': name_query}
     return render(request, 'search_results.html', context)
 
 
