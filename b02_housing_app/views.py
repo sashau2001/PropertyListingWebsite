@@ -91,7 +91,7 @@ def search_results(request):
         apt_list = list(Apartment.objects.all())
     else:
         apt_list  = list(Apartment.objects.filter(apt_name__icontains=name_query))
-
+    import pdb; pdb.set_trace()
     # Distance sorting (w/r to location)
     location_query = request.GET.get('location')
     if location_query is not None:
@@ -102,7 +102,7 @@ def search_results(request):
 
     # Distance filtering
     maxdist_query = request.GET.get('maxdist')
-    if location_query is not None and maxdist_query is not None and maxdist_query!='':
+    if location_query is not None and location_query!='' and maxdist_query is not None and maxdist_query!='':
         maxdist = float(maxdist_query)*1000 # convert from km to m
         apt_list = [apt for apt in apt_list if apt.dist<maxdist]
 
