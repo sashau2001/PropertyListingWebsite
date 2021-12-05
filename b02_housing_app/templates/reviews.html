@@ -7,27 +7,6 @@
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
 
-
-<!-- {% if review_list %}
-
-{% regroup review_list by apt_name as property_list %}
-    
-<ul>    
-    {% for property in property_list  %}
-    <li>{{property.grouper}}
-            <ul>
-                {% for review in property.list %}
-                    <li><a href="{% url 'review' review.id%}">{{ review.apt_name }}</a></li>
-                {% endfor %}
-            </ul>
-          </li>      
-    {% endfor %}
-</ul>
-
-{% else %}
-    <p>No reviews are available.</p>
-{% endif %} -->
-
 {% if review_list %}
 
 {% regroup review_list by apt_name as property_list %}
@@ -42,7 +21,13 @@
                             <div class='panel-body'>
                                 <ul>
                                     {% for review in property.list %}
-                                    <li><a href="{% url 'review' review.id%}" id='review'>{{ review.apt_reviewer }}</a></li>
+                                    
+                                    <li>
+                                        <a href="{% url 'review' review.id%}" id='review'>{{ review.apt_reviewer }}</a>
+                                        <span style="float:right;">
+                                            Rating: {{review.apt_stars}}
+                                        </span>
+                                    </li>
                                     {% endfor %}
                                 </ul>
                             </div>
