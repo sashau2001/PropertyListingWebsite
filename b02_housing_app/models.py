@@ -81,3 +81,4 @@ class Profile(models.Model, CustomTemplate):
     desired_movein_max = models.DateField(null=True,blank=True)
     desired_beds_min = models.IntegerField(null=True,blank=True)
     desired_beds_max = models.IntegerField(null=True,blank=True)
+

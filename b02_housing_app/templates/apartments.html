@@ -5,6 +5,7 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
+{% load cloudinary %}
 
 <style>
     .jumbotron {
@@ -42,6 +43,8 @@
   }
 </style>
 
+<script type="text/javascript" src="https://product-gallery.cloudinary.com/all.js"></script>
+
 <div class="row">
     <!-- LIST OF APARTMENTS -->
     <div class="col-6">
@@ -49,12 +52,26 @@
         {% if apartment_list %}
             <div class="row">
             {% for t in apartment_list %}
-            <div class="list-item">
-                {%  if t.id %}
-                <h3 class="p-5 mb-4"><a href="{% url 'apartment' t.id%}">{{ t }}</a></h3>
-                {%  endif %}
-            </div>
-            <hr style="height:3px; opacity:50%; background-color:#4186d4;">
+                <div class="list-item">
+                    {%  if t.id %}
+                    <h3 class="p-5 mb-4"><a href="{% url 'apartment' t.id%}">{{ t }}</a></h3>
+                    
+                    <!-- displaying images for each apt -->
+                    <h4 id="{{ t.id }}" style="display: none">{{ t.id }}</h4>
+                    <div class="wrap" id="wrap{{ t.id }}" style="max-width:80%;margin:auto"></div>
+                    <script>
+                        var aptID = document.getElementById('{{ t.id }}').innerText;
+                        cloudinary.galleryWidget({
+                            container: '#wrap{{ t.id }}',
+                            cloudName: 'b-02',
+                            mediaAssets: [
+                                {tag: aptID }, 
+                            ],
+                        }).render();
+                    </script>
+                    {%  endif %}
+                </div>
+                <hr style="height:3px; opacity:50%; background-color:#4186d4;">
             {% endfor %}
         </div>
         {% else %}
@@ -78,8 +95,7 @@
                 </select>
                 <button type="submit">Search</button>
             </div>
-
-
         </form>
     </div>
 </div>
+

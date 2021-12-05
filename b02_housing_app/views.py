@@ -6,8 +6,6 @@ from django.contrib import messages
 import requests,json
 
 
-
-
 def insert_review(request):
     if not request.user.is_authenticated:
         return redirect('/accounts/google/login/')
