@@ -115,7 +115,7 @@ class PropertyListingTest(TestCase):
     def test_make_review_no_login_redirect(self):
         cl = Client()
         response = cl.get(reverse('insert_review'))
-        #sys.stderr.write(repr(response.headers) + '\n')
+        # sys.stderr.write(repr(response.headers) + '\n')
         #self.assertRedirects(request,'/accounts/google/login/', status_code=302, target_status_code=200) 
         self.assertEquals(response.headers['Location'], '/accounts/google/login/')
         self.assertEquals(response.status_code, 302) 
@@ -153,5 +153,6 @@ class SearchTest(TestCase):
         request.GET.__setitem__('name_query','Nothing')
         response = search_results(request)
         # sys.stderr.write(repr(response.content) + '\n') 
+        # sys.stderr.write(repr(request.GET.__getitem__('name_query')) + '\n')
         self.assertNotContains(response, 'DummyApt') 
 

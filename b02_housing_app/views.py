@@ -6,6 +6,9 @@ from django.contrib import messages
 import requests,json
 
 def insert_review(request):
+    if not request.user.is_authenticated:
+        return redirect('/accounts/google/login/')
+    
     if request.method == 'POST':
         form = ReviewForm(request.POST or None, request.FILES or None)
         
@@ -95,11 +98,11 @@ def search_results(request):
         price_query = 'apt_price'
     # Name filtering and price
     if name_query is None:
-        apt_list = Apartment.objects.all().order_by(price_query)
+        apt_list = list(Apartment.objects.all().order_by(price_query))
     else:
-        apt_list = Apartment.objects.filter(apt_name__icontains=name_query).order_by(price_query)
+        apt_list = list(Apartment.objects.filter(apt_name__icontains=name_query).order_by(price_query))
 
-    context = {'filtered_list': apt_list}
+    context = {'filtered_list': apt_list, 'name_query': name_query}
     return render(request, 'search_results.html', context)
 
 
