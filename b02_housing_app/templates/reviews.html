@@ -8,13 +8,13 @@
 {% bootstrap_messages %}
 
 
-{% if review_list %}
+<!-- {% if review_list %}
 
 {% regroup review_list by apt_name as property_list %}
     
 <ul>    
     {% for property in property_list  %}
-          <li>{{property.grouper}}
+    <li>{{property.grouper}}
             <ul>
                 {% for review in property.list %}
                     <li><a href="{% url 'review' review.id%}">{{ review.apt_name }}</a></li>
@@ -26,4 +26,52 @@
 
 {% else %}
     <p>No reviews are available.</p>
+{% endif %} -->
+
+{% if review_list %}
+
+{% regroup review_list by apt_name as property_list %}
+    <ul>
+    {% for property in property_list  %}
+        <li>
+            <div class='panel-group'>
+                <div class='panel panel-primary'>
+                    <div class='panel-heading'>
+                        <h3 class='panel-title' data-target='#panel-{{forloop.counter}}' data-toggle='collapse'>{{property.grouper}}</h3>
+                        <div class='panel-collapse collapse' id='panel-{{forloop.counter}}'>    
+                            <div class='panel-body'>
+                                <ul>
+                                    {% for review in property.list %}
+                                    <li><a href="{% url 'review' review.id%}" id='review'>{{ review.apt_reviewer }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+        </li>
+    {%endfor%}
+    </ul>
+
+{% else %}
+    <p>No reviews are available.</p>
 {% endif %}
+
+
+<!-- Style -->
+<style type="text/css">
+    ul {
+     list-style-type: none;
+    }
+    #review:link {
+        color: #fff;
+    }
+    #review:visited {
+        color: #fff;
+    }
+</style>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
