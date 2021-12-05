@@ -76,7 +76,7 @@ def apartments(request):
         # if page is empty then return last page
         page_obj = p.page(p.num_pages)
 
-    context = {'apartment_list': apartment_list, 'apartments': True, 'page_obj': page_obj}
+    context = {'apartment_list': apartment_list, 'apartments': True, 'page_obj': page_obj, 'p': p}
     return render(request, 'apartments.html', context)
 
 def apartment(request,pk):
