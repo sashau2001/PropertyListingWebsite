@@ -61,13 +61,12 @@ class Review(models.Model):
 
 class Profile(models.Model, CustomTemplate):
     field_dict = {
-        "public_username": "Username",
+        "public_username": "Full Name",
         "bio": "Bio",
         "searching_for_apt": "Searching For Apartment?",
-        "price_range_min": "Minimum rent",
-        "price_range_max": "Maximum rent",
+        "price_range_max": "Maximum monthly rent($)",
         "desired_movein_min": "Earliest move-in date",
-        "desired_movein_max": "Latest move-in date",
+        "desired_movein_max": "Latest move-out date",
         "desired_beds_min": "Minimum bedrooms",
         "desired_beds_max": "Maximum bedrooms"
     }
@@ -75,7 +74,6 @@ class Profile(models.Model, CustomTemplate):
     public_username = models.CharField(max_length=20)
     bio = models.CharField(max_length=300,null=True,blank=True)
     searching_for_apt = models.BooleanField(default=True,blank=True)
-    price_range_min = models.IntegerField(null=True,blank=True)
     price_range_max = models.IntegerField(null=True,blank=True)
     desired_movein_min = models.DateField(null=True,blank=True)
     desired_movein_max = models.DateField(null=True,blank=True)
