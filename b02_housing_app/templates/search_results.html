@@ -9,13 +9,15 @@
 {% bootstrap_messages %}
 
 
-<h1>Search Results</h1>
+<h1>Search Results for "{{name_query}}"</h1>
 
 <div class="container">
     <div class="row">
-    {% for t in filtered_list %}
+    {% for t in apt_list %}
     <div class="col-md-4">
         <h3><a href="{% url 'apartment' t.id%}">{{ t }}</a></h3>
     </div>
+    {% empty %}
+    No results
     {% endfor %}
 </div>

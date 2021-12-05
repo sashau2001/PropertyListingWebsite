@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.http import HttpRequest
+
 import sys
 
 from .models import Apartment, Review
@@ -114,7 +115,7 @@ class PropertyListingTest(TestCase):
     def test_make_review_no_login_redirect(self):
         cl = Client()
         response = cl.get(reverse('insert_review'))
-        #sys.stderr.write(repr(response.headers) + '\n')
+        # sys.stderr.write(repr(response.headers) + '\n')
         #self.assertRedirects(request,'/accounts/google/login/', status_code=302, target_status_code=200) 
         self.assertEquals(response.headers['Location'], '/accounts/google/login/')
         self.assertEquals(response.status_code, 302) 
@@ -133,13 +134,15 @@ class GoogleMapTest(TestCase):
 
 class SearchTest(TestCase):
     def setUp(self):
-        apartmentTest = Apartment(apt_name='DummyApt',apt_location='St.New Lenox, IL 60451')
+        apartmentTest = Apartment(apt_name='DummyApt',apt_location='St.New Lenox, IL 60451', apt_price=100)
+        apartmentTest2 = Apartment(apt_name='ExpensiveApt',apt_location='St.New Lenox, IL 60451', apt_price=1000)
         apartmentTest.save()
+        apartmentTest2.save()
     
     #Simple test for apartment in list
     def test_simple_search(self):
         request = HttpRequest()
-        request.GET.__setitem__('name_query','Dummy')
+        request.GET.__setitem__('name','Dummy')
         response = search_results(request)
         # sys.stderr.write(repr(response.content) + '\n')
         self.assertContains(response, 'DummyApt') 
@@ -147,7 +150,9 @@ class SearchTest(TestCase):
     #Simple test for apartment not in list
     def test_not_contain(self):
         request = HttpRequest()
-        request.GET.__setitem__('name_query','Nothing')
+        request.GET.__setitem__('name','Nothing')
         response = search_results(request)
-        sys.stderr.write(repr(response.content) + '\n')
+        # sys.stderr.write(repr(response.content) + '\n') 
+        # sys.stderr.write(repr(request.GET.__getitem__('name_query')) + '\n')
         self.assertNotContains(response, 'DummyApt') 
+
