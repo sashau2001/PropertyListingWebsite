@@ -43,8 +43,6 @@
   }
 </style>
 
-<script type="text/javascript" src="https://product-gallery.cloudinary.com/all.js"></script>
-
 
 <div class="row">
     <!-- LIST OF APARTMENTS -->
@@ -59,18 +57,6 @@
                 {%  endif %}
             </div>
             <hr style="height:3px; opacity:50%; background-color:#4186d4;">
-            <div class="wrap" id="wrap" style="max-width:80%;margin:auto"></div>
-            <script>
-            cloudinary.galleryWidget({
-                container: '#wrap',
-                cloudName: 'b-02',
-                mediaAssets: [
-                    {tag: "sample"}, 
-                    {tag: "sample", mediaType: "image"}
-                ],
-            }).render();
-
-            </script>
             {% endfor %}
         </div>
         {% else %}
