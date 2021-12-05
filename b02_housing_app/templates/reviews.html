@@ -1,4 +1,4 @@
- {% include 'navbar.html' %}
+{% include 'navbar.html' %}
 
 
 
@@ -9,24 +9,21 @@
 
 
 {% if review_list %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Apartment</th>
-                <th scope="col">Reviewer</th>
-                <th scope="col">Rating</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for review in review_list  %}
-                <tr>
-                    <th scope="row"><a href="{% url 'review' review.id%}">{{ review.apt_name }}</a></th>
-                    <th scope="row">{{ review.apt_reviewer }}</th>
-                    <th scope="row">{{ review.apt_stars }}/5</th>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+{% regroup review_list by apt_name as property_list %}
+    
+<ul>    
+    {% for property in property_list  %}
+          <li>{{property.grouper}}
+            <ul>
+                {% for review in property.list %}
+                    <li><a href="{% url 'review' review.id%}">{{ review.apt_name }}</a></li>
+                {% endfor %}
+            </ul>
+          </li>      
+    {% endfor %}
+</ul>
+
 {% else %}
     <p>No reviews are available.</p>
 {% endif %}
