@@ -89,7 +89,15 @@ def homepage(request):
 
 def apartments(request):
     apt_list = search_results(request)
-    p = Paginator(apt_list, 5)
+
+    # no searching
+    if request.GET.__contains__('name') or request.GET.__contains__('price') or request.GET.__contains__('location'):
+        max_per_page = len(apt_list)
+    else:
+        max_per_page = 5
+
+    # after searching
+    p = Paginator(apt_list, max_per_page)
     page_number = request.GET.get('page')
     try:
         page_obj = p.get_page(page_number)  # returns the desired page object
