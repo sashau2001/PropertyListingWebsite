@@ -18,16 +18,15 @@ def insert_review(request):
         form = ReviewForm(request.POST or None, request.FILES or None)
         
         if form.is_valid():
-            context = {'form': ReviewForm(request.GET), 'insertReview': True}
             form_save = form.save(commit=False)
             form_save.apt_reviewer = request.user.username
             form_save.save()
             messages.success(request, 'Submitted successfully')
-            return render(request, 'default_form.html', context)
+            return redirect('/reviews/')
     else:
         form = ReviewForm()
     context = {'form': form, 'insertReview': True}
-    return render(request, 'default_form.html', context)
+    return render(request, 'review_form.html', context)
 
 def edit_profile(request):
     if not request.user.is_authenticated:

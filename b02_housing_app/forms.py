@@ -5,6 +5,18 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ["apt_name","apt_review","apt_stars"]
+        widgets = {
+            'apt_name': forms.Select(attrs={
+                'class': "form-control",
+            }),
+            'apt_stars': forms.Select(attrs={
+                'class': "form-control",
+            }),
+            'apt_review': forms.Textarea(attrs={
+                'class': "form-control",
+            }),
+        }
+
 
 class ApartmentForm(forms.ModelForm):
     class Meta:
