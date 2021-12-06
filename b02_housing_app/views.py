@@ -119,14 +119,7 @@ def my_profile(request):
     prof_list = Profile.objects.filter(user=request.user)
     # no user profile exists yet
     if not prof_list.exists():
-        form = ProfileForm(request.POST or None, request.FILES or None)
-        if form.is_valid():
-            form_save = form.save(commit=False)
-            # set user
-            form_save.user = request.user
-            form_save.save()
-        context = {'form': form, 'profile': True}
-        return render(request, 'default_form.html', context)
+        return redirect("create/")
     # user profile already exists
     prof = prof_list[0]
     context['profile'] = prof
