@@ -2,9 +2,19 @@
 {% bootstrap_css %}
 
 {% include 'navbar.html' %}
+{% include 'footer.html' %}
+
+<style>
+    .backdrop {
+        background-color: #e3f2fd;
+      }
+</style>
+
+<div class="backdrop">
 <form method="post">
     {% csrf_token %}
-<div class="container rounded bg-white mt-5 mb-5">
+<div class="container rounded mt-5 mb-5">
+    <div class="backdrop">
     <div class="row">
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
@@ -27,13 +37,15 @@
                         {{ form.apt_review }}
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style= "padding-top: 15px">
                     <input class="btn btn-primary" type="submit" value="Submit">
                 </div>
             </div>
         </div>
     </div>
+    </div>
 </div>
 </div>
 </div>
 </form>
+</div>
