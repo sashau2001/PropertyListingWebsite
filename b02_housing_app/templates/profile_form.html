@@ -2,9 +2,11 @@
 {% bootstrap_css %}
 
 {% include 'navbar.html' %}
+{% include 'footer.html' %}
+
 <form method="post">
     {% csrf_token %}
-<div class="container rounded bg-white mt-5 mb-5">
+<div class="container rounded bg-white mt-5 mb-5" style="padding-left: 1in; padding-right: 1in;">
     <div class="row">
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
@@ -42,22 +44,22 @@
                     <div class="col-md-12">
                         {{ form.price_range_max }}
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-6">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
                         <label class="labels"> Earliest move-in</label>
                         {{ form.desired_movein_min }}
                     </div>
-                    <div class="col-md-6">
+                    <div class="form-group col-md-6">
                         <label class="labels"> Latest move-out</label>
                         {{ form.desired_movein_max }}
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-6">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
                         <label class="labels">Minimum beds</label>
                         {{ form.desired_beds_min }}
                     </div>
-                    <div class="col-md-6">
+                    <div class="form-group col-md-6">
                         <label class="labels">Maximum beds</label>
                         {{ form.desired_beds_max }}
                     </div>
