@@ -21,7 +21,7 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.apartments, name='apartments'),
+    path('', views.homepage, name='homepage'),
     path('accounts/', include('allauth.urls'), name='accounts'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('submitreview/', views.insert_review, name='insert_review'),
@@ -31,5 +31,7 @@ urlpatterns = [
     path('apartment/<int:pk>/', views.apartment, name='apartment'),
     path('apartments/', views.apartments, name='apartments'),
     path('my_profile/',views.my_profile, name='my_profile'),
+    path('my_profile/edit/',views.edit_profile, name='edit_profile'),
+    path('my_profile/create/',views.create_profile, name='create_profile'),
     path('search/', views.search_results, name='search_results')
 ]
