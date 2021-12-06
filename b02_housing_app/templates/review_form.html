@@ -1,0 +1,41 @@
+{% load bootstrap5 %}
+{% bootstrap_css %}
+
+{% include 'navbar.html' %}
+<form method="post">
+    {% csrf_token %}
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div>
+                    <h4 class="text-right">Review</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label class="labels">Apartment</label>
+                        {{ form.apt_name }}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="labels">Stars (out of 5)</label>
+                        {{ form.apt_stars }}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <label class="labels">Review</label>
+                        {{ form.apt_review }}
+                    </div>
+                </div>
+                <div class="row mt-3"">
+                    <input class="btn btn-primary" type="submit" value="Submit">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</form>
+
+{% include 'footer.html' %}
