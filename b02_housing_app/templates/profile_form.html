@@ -4,9 +4,19 @@
 {% include 'navbar.html' %}
 {% include 'footer.html' %}
 
+<style>
+    .backdrop {
+        background-color: #e3f2fd;
+        margin-top: 0px;
+        margin-bottom: 0px;
+      }
+</style>
+
+<body class="backdrop">
 <form method="post">
     {% csrf_token %}
-<div class="container rounded bg-white mt-5 mb-5" style="padding-left: 1in; padding-right: 1in;">
+<div class="container rounded bg-white mt-5 mb-5" style="padding-left: 1in; padding-right: 1in; background-color: #e3f2fd;">
+    <div class="backdrop">
     <div class="row">
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
@@ -70,6 +80,8 @@
 </div>
 </div>
 </div>
+</div>
 </form>
 
 {% include 'footer.html' %}
+</body>
