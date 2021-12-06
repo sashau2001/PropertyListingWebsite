@@ -25,6 +25,28 @@ def insert_review(request):
     context = {'form': form, 'insertReview': True}
     return render(request, 'default_form.html', context)
 
+def edit_profile(request):
+    if not request.user.is_authenticated:
+        return redirect('/accounts/google/login/')
+    instance = Profile.objects.get(user=request.user)
+    form = ProfileForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        form.save()
+        return redirect('/my_profile/')
+    context = {'form': form, 'myProfile': True}
+    return render(request, 'profile_form.html', context)
+
+def create_profile(request):
+    if not request.user.is_authenticated:
+        return redirect('/accounts/google/login/')
+    form = ProfileForm(request.POST or None)
+    if form.is_valid():
+        form.instance.user=request.user
+        form.save()
+        return redirect('/my_profile/')
+    context = {'form': form, 'myProfile': True}
+    return render(request, 'profile_form.html', context)
+
 def insert_apartment(request):
     if not request.user.is_authenticated or not request.user.is_superuser:
         return redirect('/accounts/google/login/')
@@ -74,18 +96,11 @@ def my_profile(request):
     # not logged in
     if not request.user.is_authenticated:
         return redirect('/accounts/google/login/')
-    context = {'profiles': True, 'editable': True}
+    context = {'myProfile': True, 'editable': True}
     prof_list = Profile.objects.filter(user=request.user)
     # no user profile exists yet
     if not prof_list.exists():
-        form = ProfileForm(request.POST or None, request.FILES or None)
-        if form.is_valid():
-            form_save = form.save(commit=False)
-            # set user
-            form_save.user = request.user
-            form_save.save()
-        context = {'form': form, 'profile': True}
-        return render(request, 'default_form.html', context)
+        return redirect('create/')
     # user profile already exists
     prof = prof_list[0]
     context['profile'] = prof
