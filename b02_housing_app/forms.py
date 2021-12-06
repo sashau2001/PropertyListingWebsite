@@ -44,11 +44,11 @@ class ProfileForm(forms.ModelForm):
             }),
             'desired_movein_min': forms.DateInput(attrs={
                 'class': "form-control",
-                'placeholder': "Earliest movein"
+                'placeholder': "yyyy-mm-dd"
             }),
             'desired_movein_max': forms.DateInput(attrs={
                 'class': "form-control",
-                'placeholder': "Latest moveout"
+                'placeholder': "yyyy-mm-dd"
             }),
             'desired_beds_min': forms.NumberInput(attrs={
                 'class': "form-control",
