@@ -128,13 +128,11 @@ def my_profile(request):
 def search_results(request):
     name_query = request.GET.get('name')
     price_query = request.GET.get('price')
-    if price_query is None:
-        price_query = 'apt_price'
-    # Name filtering and price
+    # Name filtering
     if name_query is None:
-        apt_list = list(Apartment.objects.all().order_by(price_query))
+        apt_list = list(Apartment.objects.all())
     else:
-        apt_list = list(Apartment.objects.filter(apt_name__icontains=name_query).order_by(price_query))
+        apt_list = list(Apartment.objects.filter(apt_name__icontains=name_query))
 
     # Distance sorting (w/r to location)
     location_query = request.GET.get('location')
@@ -149,6 +147,10 @@ def search_results(request):
     if location_query is not None and location_query!='' and maxdist_query is not None and maxdist_query!='':
         maxdist = float(maxdist_query)*1000 # convert from km to m
         apt_list = [apt for apt in apt_list if apt.dist<maxdist]
+
+    # Price ordering
+    if price_query is not None and price_query=="true":
+        apt_list.sort(key=lambda k: k.apt_price)
 
     return apt_list
 

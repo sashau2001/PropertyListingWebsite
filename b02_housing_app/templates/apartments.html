@@ -67,11 +67,16 @@
                 <input class="form-control" name="name" type="text" placeholder="Apartment Name">
             </div>
             <div class=" col-6">
-                 <select class="form-control" name="price">
-                     <option value="" disabled selected hidden>Price order</option>
-                     <option value="apt_price">Low to High</option>
-                     <option value="-apt_price">High to Low</option>
-                </select>
+{#                 <select class="form-control" name="price">#}
+{#                     <option value="" disabled selected hidden>Price order</option>#}
+{#                     <option value="apt_price">Low to High</option>#}
+{#                </select>#}
+                <div class="form-check">
+                    <input class="form-check-input" id="price" type="checkbox" value="true" name="price">
+                    <label class="form-check-label" for="price">
+                        Sort by rent (low to high)
+                    </label>
+                </div>
             </div>
              <div class=" col-6">
                  <input class="form-control" name="location" type="text" placeholder="Nearby address">
