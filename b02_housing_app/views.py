@@ -29,6 +29,28 @@ def insert_review(request):
     context = {'form': form, 'insertReview': True}
     return render(request, 'default_form.html', context)
 
+def edit_profile(request):
+    if not request.user.is_authenticated:
+        return redirect('/accounts/google/login/')
+    instance = Profile.objects.get(user=request.user)
+    form = ProfileForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        form.save()
+        return redirect('/my_profile/')
+    context = {'form': form, 'myProfile': True}
+    return render(request, 'profile_form.html', context)
+
+def create_profile(request):
+    if not request.user.is_authenticated:
+        return redirect('/accounts/google/login/')
+    form = ProfileForm(request.POST or None)
+    if form.is_valid():
+        form.instance.user=request.user
+        form.save()
+        return redirect('/my_profile/')
+    context = {'form': form, 'myProfile': True}
+    return render(request, 'profile_form.html', context)
+
 def insert_apartment(request):
     if not request.user.is_authenticated or not request.user.is_superuser:
         return redirect('/accounts/google/login/')
@@ -60,6 +82,9 @@ def review(request,pk):
     this_review = Review.objects.get(pk=pk)
     context = {'review': this_review, 'reviews': True}
     return render(request,'review.html',context)
+
+def homepage(request):
+    return render(request, 'homepage.html')
 
 
 
