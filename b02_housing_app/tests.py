@@ -143,7 +143,7 @@ class SearchTest(TestCase):
     def test_simple_search(self):
         request = HttpRequest()
         request.GET.__setitem__('name','Dummy')
-        response = search_results(request)
+        response = apartments(request)
         # sys.stderr.write(repr(response.content) + '\n')
         self.assertContains(response, 'DummyApt') 
 
@@ -151,7 +151,7 @@ class SearchTest(TestCase):
     def test_not_contain(self):
         request = HttpRequest()
         request.GET.__setitem__('name','Nothing')
-        response = search_results(request)
+        response = apartments(request)
         # sys.stderr.write(repr(response.content) + '\n') 
         # sys.stderr.write(repr(request.GET.__getitem__('name_query')) + '\n')
         self.assertNotContains(response, 'DummyApt') 

@@ -88,8 +88,16 @@ def homepage(request):
 
 
 def apartments(request):
-    apt_list = Apartment.objects.all()
-    p = Paginator(apt_list, 5)
+    apt_list = search_results(request)
+
+    # no searching
+    if request.GET.__contains__('name') or request.GET.__contains__('price') or request.GET.__contains__('location'):
+        max_per_page = max(len(apt_list), 5)
+    else:
+        max_per_page = 5
+
+    # after searching
+    p = Paginator(apt_list, max_per_page)
     page_number = request.GET.get('page')
     try:
         page_obj = p.get_page(page_number)  # returns the desired page object
@@ -125,17 +133,14 @@ def my_profile(request):
     context['profile'] = prof
     return render(request, 'profile.html', context)
 
-#Filter by name for now
 def search_results(request):
     name_query = request.GET.get('name')
     price_query = request.GET.get('price')
-    if price_query is None:
-        price_query = 'apt_price'
-    # Name filtering and price
+    # Name filtering
     if name_query is None:
-        apt_list = list(Apartment.objects.all().order_by(price_query))
+        apt_list = list(Apartment.objects.all())
     else:
-        apt_list = list(Apartment.objects.filter(apt_name__icontains=name_query).order_by(price_query))
+        apt_list = list(Apartment.objects.filter(apt_name__icontains=name_query))
 
     # Distance sorting (w/r to location)
     location_query = request.GET.get('location')
@@ -151,20 +156,11 @@ def search_results(request):
         maxdist = float(maxdist_query)*1000 # convert from km to m
         apt_list = [apt for apt in apt_list if apt.dist<maxdist]
 
-    p = Paginator(apt_list, 5)
-    page_number = request.GET.get('page')
-    try:
-        page_obj = p.get_page(page_number)  # returns the desired page object
-    except PageNotAnInteger:
-        # if page_number is not an integer then assign the first page
-        page_obj = p.page(1)
-    except EmptyPage:
-        # if page is empty then return last page
-        page_obj = p.page(p.num_pages)
+    # Price ordering
+    if price_query is not None and price_query=="true":
+        apt_list.sort(key=lambda k: k.apt_price)
 
-    context = {'apt_list': apt_list, 'name_query': name_query, 'page_obj': page_obj, 'p': p}
-    return render(request, 'search_results.html', context)
-
+    return apt_list
 
 
 def get_distance(source,dest):
