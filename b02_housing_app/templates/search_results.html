@@ -27,9 +27,10 @@
   /* format for items in the list-container */
   .list-item {
     padding: 5px;
-    /* margin-top: 1px;
-    margin-bottom: 1px; */
+<!--    margin-top: 40px;-->
+<!--    margin-bottom: 40px;-->
     background-color: white;
+    width: 1800px;
   }
 
   /* make items in the list light gray when hovered over */
@@ -83,7 +84,7 @@
 
 <!-- LIST OF APARTMENTS -->
 <div class="col-6">
-    <div class="list-container">
+<!--    <div class="list-container">-->
     {% if apt_list %}
         <div class="row">t
         {% for t in page_obj.object_list %}
@@ -114,7 +115,7 @@
     {% else %}
         <p>No apartments are available.</p>
     {% endif %}
-    </div>
+<!--    </div>-->
 </div>
 
 <nav aria-label="Page navigation example">
