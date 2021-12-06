@@ -73,7 +73,7 @@ def get_new_id():
     return new_id
 
 def reviews(request):
-    review_list = Review.objects.all()
+    review_list = Review.objects.all().order_by('apt_name')
     context = {'review_list': review_list, 'reviews': True}
     return render(request, 'reviews.html', context)
 
@@ -115,7 +115,7 @@ def my_profile(request):
     # not logged in
     if not request.user.is_authenticated:
         return redirect('/accounts/google/login/')
-    context = {'profiles': True, 'editable': True}
+    context = {'myProfile': True, 'editable': True}
     prof_list = Profile.objects.filter(user=request.user)
     # no user profile exists yet
     if not prof_list.exists():
