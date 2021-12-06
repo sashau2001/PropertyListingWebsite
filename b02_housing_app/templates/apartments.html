@@ -111,13 +111,13 @@
         </div>
         <hr style="height:3px; opacity:50%; background-color:#4186d4;">
         {% endfor %}
-    </div>-->
+    </div>
     {% else %}
         <p>No apartments are available.</p>
     {% endif %}
 <!--    </div>-->
 </div>
-
+<div class="last-content">
 <nav aria-label="Page navigation example">
   <ul class="pagination">
     {% if page_obj.has_previous %}
@@ -134,4 +134,5 @@
     {% endif %}
   </ul>
 </nav>
-
+</div>
+{% include 'footer.html' %}

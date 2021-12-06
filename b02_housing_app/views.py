@@ -115,7 +115,7 @@ def my_profile(request):
     # not logged in
     if not request.user.is_authenticated:
         return redirect('/accounts/google/login/')
-    context = {'profiles': True, 'editable': True}
+    context = {'myProfile': True, 'editable': True}
     prof_list = Profile.objects.filter(user=request.user)
     # no user profile exists yet
     if not prof_list.exists():
