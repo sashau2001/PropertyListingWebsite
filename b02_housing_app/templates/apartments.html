@@ -12,7 +12,7 @@
     background-size: cover;
   }
     .list-container {
-    overflow: hidden;
+    overflow: scroll;
     width: 1850px;
     height: 800px;
     padding: 10px;
@@ -23,7 +23,7 @@
     background-color: white;
     color: black;
   }
-  
+
   /* format for items in the list-container */
   .list-item {
     padding: .25px;
@@ -31,7 +31,7 @@
     margin-bottom: 40px; */
     background-color: white;
   }
-  
+
   /* make items in the list light gray when hovered over */
   .list-item:hover {
     background-color: #e7eaee;
@@ -46,7 +46,7 @@
 
 </style>
 
-
+<script type="text/javascript" src="https://product-gallery.cloudinary.com/all.js"></script>
 
  <!-- SEARCH FILTERS -->
 <div class="container">
@@ -85,11 +85,27 @@
 <div class="col-6">
     <div class="list-container">
     {% if apt_list %}
-        <div class="row">
+        <div class="row">t
         {% for t in page_obj.object_list %}
         <div class="list-item">
             {%  if t.id %}
             <h3 class="p-5 mb-4"><a href="{% url 'apartment' t.id%}">{{ t }}</a></h3>
+
+
+            <!-- displaying images for each apt -->
+            <h4 id="{{ t.id }}" style="display: none">{{ t.id }}</h4>
+            <div class="wrap" id="wrap{{ t.id }}" style="max-width:80%;margin:auto"></div>
+            <script>
+              var aptID = document.getElementById('{{ t.id }}').innerText;
+              cloudinary.galleryWidget({
+                  container: '#wrap{{ t.id }}',
+                  cloudName: 'b-02',
+                  mediaAssets: [
+                      {tag: aptID },
+                  ],
+              }).render();
+            </script>
+
             {%  endif %}
         </div>
         <hr style="height:3px; opacity:50%; background-color:#4186d4;">
