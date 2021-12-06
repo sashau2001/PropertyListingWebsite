@@ -1,52 +1,74 @@
 
- {% include 'navbar.html' %}
- {% include 'footer.html' %}
+{% include 'navbar.html' %}
+{% include 'footer.html' %}
+
 
 {% load bootstrap5 %}
+
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
 
-<div class="last-content">
-{% if review_list %}
 
-{% regroup review_list by apt_name as property_list %}
-    <ul>
-    {% for property in property_list  %}
-        <li>
-            <div class='panel-group'>
-                <div class='panel panel-primary'>
-                    <div class='panel-heading'>
-                        <h3 class='panel-title' data-target='#panel-{{forloop.counter}}' data-toggle='collapse'>{{property.grouper}}</h3>
-                        <div class='panel-collapse collapse' id='panel-{{forloop.counter}}'>    
-                            <div class='panel-body'>
-                                <ul>
-                                    {% for review in property.list %}
-                                    
-                                    <li>
-                                        <a href="{% url 'review' review.id%}" id='review'>{{ review.apt_reviewer }}</a>
-                                        <span style="float:right;">
-                                            Rating: {{review.apt_stars}}
-                                        </span>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>    
+<div class="last-content" id="wrapper">
+    {% if review_list %}
+    
+    {% regroup review_list by apt_name as property_list %}
+        <ul>
+        {% for property in property_list  %}
+            <li>
+                <div class='panel-group'>
+                    <div class='panel panel-primary'>
+                        <div class='panel-heading'>
+                            <h3 class='panel-title' data-target='#panel-{{forloop.counter}}' data-toggle='collapse'>{{property.grouper}}</h3>
+                            <div class='panel-collapse collapse' id='panel-{{forloop.counter}}'>    
+                                <div class='panel-body'>
+                                    <ul>
+                                        {% for review in property.list %}
+                                        
+                                        <li>
+                                            <div class='panel-group'>
+                                                <div class='panel panel-primary'>
+                                                    <div class='panel-heading'>
+                                                        <h3 class='panel-title' data-target='#reviewPanel-{{review.id}}' data-toggle='collapse'>
+                                                            {{review.apt_reviewer}}
+                                                            <span style="float:right;">
+                                                                Rating: {{review.apt_stars}}
+                                                            </span>
+                                                        </h3>
+                                                        <div class='panel-collapse collapse' id='reviewPanel-{{review.id}}'>
+                                                            <div class='panel-body'>
+                                                                {{review.apt_review}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>    
+                                        </li>
+                                        
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>    
+                        </div>
                     </div>
                 </div>
-            </div>
-        </li>
-    {%endfor%}
-    </ul>
+            </li>
+        {%endfor%}
+        </ul>
+    
+    {% else %}
+        <p>No reviews are available.</p>
+    {% endif %}
+    </div>
+    
 
-{% else %}
-    <p>No reviews are available.</p>
-{% endif %}
-</div>
+
+
+
 
 <!-- Style -->
-<style type="text/css">
+<style>
     ul {
      list-style-type: none;
     }
@@ -56,7 +78,13 @@
     #review:visited {
         color: #fff;
     }
+    #wrapper {
+       margin-right: 20px;
+    }
+   
 </style>
+
+
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
