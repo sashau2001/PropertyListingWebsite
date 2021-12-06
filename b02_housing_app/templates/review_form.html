@@ -7,10 +7,12 @@
 <style>
     .backdrop {
         background-color: #e3f2fd;
+        margin-top: 0px;
+        margin-bottom: 0px;
       }
 </style>
 
-<div class="backdrop">
+<body class="backdrop">
 <form method="post">
     {% csrf_token %}
 <div class="container rounded mt-5 mb-5">
@@ -48,3 +50,4 @@
 </div>
 </div>
 </form>
+</body>

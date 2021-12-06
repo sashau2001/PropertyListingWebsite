@@ -13,12 +13,14 @@
     background-size: cover;
     background-position: center center;
   }
-  .background-color {
-    background-color: #e3f2fd;
-  }
+  .backdrop {
+        background-color: #e3f2fd;
+        margin-top: 0px;
+        margin-bottom: 0px;
+}
   p {
         color: #ffffff;
-    }
+}
 </style>
 
 <div style="background-color: #e3f2fd">
@@ -36,8 +38,7 @@
     <hr class="my-4">
   </div>
 </div>
-
-
+<body class="backdrop">
     <div class="card">
         <h5 class="card-header" style="text-align: center; background-color: rgb(236, 236, 236);">Welcome!</h5>
         <div class="card-body">
@@ -55,6 +56,5 @@
           {% endif %}
         </div>
       </div>
-
+</body>
 </div>
-
