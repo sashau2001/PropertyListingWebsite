@@ -4,6 +4,10 @@ from django.conf import settings
 from .forms import *
 from django.contrib import messages
 import requests,json
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.views.generic.list import ListView
+
+
 
 
 def insert_review(request):
@@ -78,13 +82,25 @@ def review(request,pk):
     context = {'review': this_review, 'reviews': True}
     return render(request,'review.html',context)
 
-
 def homepage(request):
     return render(request, 'homepage.html')
 
+
+
 def apartments(request):
-    apartment_list = Apartment.objects.all()
-    context = {'apartment_list': apartment_list, 'apartments': True}
+    apt_list = Apartment.objects.all()
+    p = Paginator(apt_list, 5)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)  # returns the desired page object
+    except PageNotAnInteger:
+        # if page_number is not an integer then assign the first page
+        page_obj = p.page(1)
+    except EmptyPage:
+        # if page is empty then return last page
+        page_obj = p.page(p.num_pages)
+
+    context = {'apt_list': apt_list, 'apartments': True, 'page_obj': page_obj, 'p': p}
     return render(request, 'apartments.html', context)
 
 def apartment(request,pk):
@@ -99,11 +115,18 @@ def my_profile(request):
     # not logged in
     if not request.user.is_authenticated:
         return redirect('/accounts/google/login/')
-    context = {'myProfile': True, 'editable': True}
+    context = {'profiles': True, 'editable': True}
     prof_list = Profile.objects.filter(user=request.user)
     # no user profile exists yet
     if not prof_list.exists():
-        return redirect('create/')
+        form = ProfileForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form_save = form.save(commit=False)
+            # set user
+            form_save.user = request.user
+            form_save.save()
+        context = {'form': form, 'profile': True}
+        return render(request, 'default_form.html', context)
     # user profile already exists
     prof = prof_list[0]
     context['profile'] = prof
@@ -113,7 +136,6 @@ def my_profile(request):
 def search_results(request):
     name_query = request.GET.get('name')
     price_query = request.GET.get('price')
-   
     if price_query is None:
         price_query = 'apt_price'
     # Name filtering and price
@@ -136,8 +158,20 @@ def search_results(request):
         maxdist = float(maxdist_query)*1000 # convert from km to m
         apt_list = [apt for apt in apt_list if apt.dist<maxdist]
 
-    context = {'apt_list': apt_list, 'name_query': name_query}
+    p = Paginator(apt_list, 5)
+    page_number = request.GET.get('page')
+    try:
+        page_obj = p.get_page(page_number)  # returns the desired page object
+    except PageNotAnInteger:
+        # if page_number is not an integer then assign the first page
+        page_obj = p.page(1)
+    except EmptyPage:
+        # if page is empty then return last page
+        page_obj = p.page(p.num_pages)
+
+    context = {'apt_list': apt_list, 'name_query': name_query, 'page_obj': page_obj, 'p': p}
     return render(request, 'search_results.html', context)
+
 
 
 def get_distance(source,dest):
@@ -149,3 +183,9 @@ def get_distance(source,dest):
         return req.json()['rows'][0]['elements'][0]['distance']['value']
     except:
         return -1 # invaid address?
+
+
+
+class ApartmentListView(ListView):
+    model = Apartment
+    paginate_by = 5
