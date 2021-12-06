@@ -92,7 +92,7 @@ def apartments(request):
 
     # no searching
     if request.GET.__contains__('name') or request.GET.__contains__('price') or request.GET.__contains__('location'):
-        max_per_page = len(apt_list)
+        max_per_page = max(len(apt_list), 5)
     else:
         max_per_page = 5
 
