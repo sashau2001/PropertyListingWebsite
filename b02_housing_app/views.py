@@ -73,7 +73,7 @@ def get_new_id():
     return new_id
 
 def reviews(request):
-    review_list = Review.objects.all()
+    review_list = Review.objects.all().order_by('apt_name')
     context = {'review_list': review_list, 'reviews': True}
     return render(request, 'reviews.html', context)
 
