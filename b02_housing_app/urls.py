@@ -21,7 +21,7 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.apartments, name='apartments'),
+    path('', views.homepage, name='homepage'),
     path('accounts/', include('allauth.urls'), name='accounts'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('submitreview/', views.insert_review, name='insert_review'),
