@@ -7,6 +7,7 @@
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
 
+
 <script type="text/javascript" src="https://product-gallery.cloudinary.com/all.js"></script>
 
 {% if apartment %}
@@ -31,7 +32,7 @@
       </div>
     </div>
 
-    <table class="table">
+    <table class="table" style="margin-bottom: 100px">
       <tbody>
       {% for field in apartment|get_valid_fields %}
           <tr>
@@ -44,3 +45,4 @@
 {% else %}
     <p>No apartments are available.</p>
 {% endif %}
+
