@@ -12,7 +12,7 @@
     background-size: cover;
   }
     .list-container {
-    overflow: hidden;
+    overflow: scroll;
     width: 1850px;
     height: 800px;
     padding: 10px;
@@ -26,7 +26,7 @@
 
   /* format for items in the list-container */
   .list-item {
-    padding: .25px;
+    padding: 5px;
     /* margin-top: 40px;
     margin-bottom: 40px; */
     background-color: white;
@@ -46,7 +46,7 @@
 
 </style>
 
-
+<script type="text/javascript" src="https://product-gallery.cloudinary.com/all.js"></script>
 
  <!-- SEARCH FILTERS -->
 <div class="container">
@@ -85,11 +85,27 @@
 <div class="col-6">
     <div class="list-container">
     {% if apt_list %}
-        <div class="row">
+        <div class="row">t
         {% for t in page_obj.object_list %}
         <div class="list-item">
             {%  if t.id %}
             <h3 class="p-5 mb-4"><a href="{% url 'apartment' t.id%}">{{ t }}</a></h3>
+
+
+            <!-- displaying images for each apt -->
+            <h4 id="{{ t.id }}" style="display: none">{{ t.id }}</h4>
+            <div class="wrap" id="wrap{{ t.id }}" style="max-width:80%;margin:auto"></div>
+            <script>
+              var aptID = document.getElementById('{{ t.id }}').innerText;
+              cloudinary.galleryWidget({
+                  container: '#wrap{{ t.id }}',
+                  cloudName: 'b-02',
+                  mediaAssets: [
+                      {tag: aptID },
+                  ],
+              }).render();
+            </script>
+
             {%  endif %}
         </div>
         <hr style="height:3px; opacity:50%; background-color:#4186d4;">
@@ -101,20 +117,20 @@
     </div>
 </div>
 
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
 
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
+    {% else %}
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
 
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-</div>
+    {% endif %}
+
+
+    {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+    {% endif %}
+  </ul>
+</nav>
+
