@@ -61,7 +61,8 @@ def review(request,pk):
     context = {'review': this_review, 'reviews': True}
     return render(request,'review.html',context)
 
-
+def homepage(request):
+    return render(request, 'homepage.html')
 
 def apartments(request):
     apt_list = Apartment.objects.all()
