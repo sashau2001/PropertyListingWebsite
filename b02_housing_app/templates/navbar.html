@@ -1,6 +1,6 @@
 {% load socialaccount %}
 
-<nav class="navbar sticky-top navbar-light bg-light">
+<nav class="navbar sticky-top navbar-light bg-light" >
   <a class="navbar-brand" href="{% url 'homepage'%}">
     <img src="https://upload.wikimedia.org/wikipedia/commons/d/dd/University_of_Virginia_Rotunda_logo.svg" width="34" height="34" class="d-inline-block align-top" alt="" style="margin-left: 0.1in; margin-right: 0.05in;">
       UVA Off Grounds Housing
@@ -24,7 +24,7 @@
   <li class="nav-item">
     <a class="nav-link {% if myProfile %}active{% endif %}" href="{% url 'my_profile'%}">View Profile</a>
   </li>
-  <!-- might want to move to homepage -->
+  <!-- moved to homepage -->
   <!--
   <li class="nav-item">
       {% if user.is_authenticated %}
