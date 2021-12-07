@@ -1,5 +1,8 @@
  {% include 'navbar.html' %}
  {% include 'footer.html' %}
+<head>
+    <title>{{ apartment.apt_name }}</title>
+</head>
 
 {% load bootstrap5 %}
 {% load model_object_handling %}
@@ -45,4 +48,3 @@
 {% else %}
     <p>No apartments are available.</p>
 {% endif %}
-
